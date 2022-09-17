@@ -2,7 +2,8 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const app = express();
-const userRoute = require("./routes/user.routes");
+const userRoute = require("./routes/student.routes");
+const tutorRoute = require("./routes/tutor.routes")
 var db = require("./config/db.config");
 
 
@@ -18,7 +19,8 @@ db.connect((err) => {
     console.log("connected to database");
 });
 
-app.use('/', userRoute)
+app.use('/student', userRoute)
+app.use('/tutor', tutorRoute)
 
 const PORT = process.env.PORT || 1080;
 app.listen(PORT, () => console.log(`SERVER RUNNING ON PORT ${PORT}`));

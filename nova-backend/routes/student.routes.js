@@ -8,4 +8,12 @@ router.get('/test', (req, res) => {
     res.json("hiii")
 })
 
+
+router.post('/signup', (req, res) => {
+    console.log("req rec");
+    console.log(req.body);
+    userController.doSignup(req.body).then((details) => {
+        res.send(details)
+    })
+})
 module.exports = router;
