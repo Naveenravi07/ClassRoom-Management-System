@@ -37,7 +37,8 @@ function SignupComponent({ type }) {
         <div>
             < div class="wrapper" >
                 <div class="inner">
-                    <img src={require('../../assets/images/image-1.png')} alt="" class="image-1" />
+                    {/* < img src={require('../../assets/images/students.jpg')} alt="" class="image-1" /> */}
+                    <img src={require("../../assets/images/image-1.png")} alt="img" className='image-1' />
                     <form id="signupform" >
                         <h3>Signup As A {type} </h3>
                         <div class="form-holder">
@@ -70,7 +71,7 @@ function SignupComponent({ type }) {
 
                     </form>
 
-                    <img src="/images/image-2.png" alt="" class="image-2" />
+
                     <script src="/javascripts/script.js"></script>
                 </div>
 

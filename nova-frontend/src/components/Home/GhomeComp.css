@@ -1,0 +1,68 @@
+@font-face {
+    font-family: "Muli-Regular";
+    src: url("../../assets/fonts/muli/Muli-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Muli-SemiBold";
+    src: url("../../assets/fonts/muli/Muli-SemiBold.ttf");
+}
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../../assets/fonts/poppins/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Bold;
+    src: url('../../assets/fonts/poppins/Poppins-Bold.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Medium;
+    src: url('../../assets/fonts/poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+    font-family: Montserrat-Bold;
+    src: url('../../assets/fonts/montserrat/Montserrat-Bold.ttf');
+}
+
+.bg {
+    background-color: #202022;
+}
+
+.homeleft {
+    background-color: #202022;
+    display: flex;
+}
+
+.texthome {
+    margin: auto;
+    font-family: Poppins-Medium;
+}
+
+.premtext {
+    font-family: monospace;
+}
+
+.main {
+    background-color: #ffff;
+
+}
+
+.textpara {
+    margin-bottom: 50px;
+}
+
+.grpimg {
+    height: 75px;
+    width: 75px;
+    border-radius: 45px;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tutorbtn {
+    margin-left: 20px;
+}
