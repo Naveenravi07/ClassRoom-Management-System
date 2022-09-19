@@ -16,4 +16,11 @@ router.post('/signup', (req, res) => {
         res.send(details)
     })
 })
+
+router.post('/login', (req, res) => {
+    console.log(req.body);
+    userController.doLogin(req.body).then((doc) => {
+        res.send(doc)
+    })
+})
 module.exports = router;

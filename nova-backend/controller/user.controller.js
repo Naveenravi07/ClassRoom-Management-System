@@ -20,4 +20,21 @@ module.exports = {
         })
     },
 
+
+    doLogin: (data) => {
+        return new Promise(async (resolve, reject) => {
+            let doc = await db.get().collection(collection.STUDENT_COLLECTION).findOne({ mail: data.email })
+            if (!doc) {
+                return reject("nodoc")
+            }
+            let pass = doc.password
+            let validPass = await bcrypt.compare(data.password, pass)
+            if (!validPass) {
+                return reject("passincorrect")
+            } else {
+                console.log(doc);
+                return resolve(doc)
+            }
+        })
+    }
 }

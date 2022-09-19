@@ -15,4 +15,10 @@ router.post('/signup', (req, res) => {
     })
 })
 
+router.post('/login', (req, res) => {
+    console.log(req.body);
+    tutorController.doLogin(req.body).then((doc) => {
+        res.send(doc)
+    })
+})
 module.exports = router

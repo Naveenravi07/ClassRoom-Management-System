@@ -6,6 +6,7 @@ import SignupScreen from './Pages/Students/Signup';
 import TSignupScreen from './Pages/Tutors/TSignup';
 import GHome from './Pages/General/GHome';
 import Main from './Pages/Students/Main';
+import Login from './Pages/Students/Login';
 
 // Importing contexts
 import Context from './contexts/AuthContext';
@@ -20,6 +21,7 @@ function App() {
           {/* Students */}
           <Route exact path='/student'> <Main /> </Route>
           <Route path='/student/signup' > <SignupScreen /> </Route>
+          <Route path='/student/login'> <Login /> </Route>
 
           {/* Tutors */}
           <Route path='/tutor/signup'> <TSignupScreen />  </Route>
