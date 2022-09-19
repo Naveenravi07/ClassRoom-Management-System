@@ -2,7 +2,11 @@ import React, { useState, useContext } from 'react';
 import axios from '../../axios/config'
 import { AuthContext } from '../../contexts/AuthContext';
 import './Signup.css';
+import { useHistory } from 'react-router-dom'
+
+
 function SignupComponent({ type }) {
+    let history = useHistory()
     let [name, setName] = useState('')
     let [phone, setPhone] = useState('')
     let [mail, setMail] = useState('')
@@ -23,6 +27,9 @@ function SignupComponent({ type }) {
                 localStorage.clear()
                 localStorage.setItem("nova", JSON.stringify(userr.data))
                 setUser(userr.data)
+                history.push("/student")
+            }).catch((Err) => {
+                history.push("/student/signup")
             })
         } else if (type == 'tutor') {
             axios.post('/tutor/signup', data).then((tutor) => {
@@ -30,6 +37,9 @@ function SignupComponent({ type }) {
                 localStorage.clear()
                 localStorage.setItem("nova", JSON.stringify(tutor.data))
                 setUser(tutor.data)
+                history.push("/tutor")
+            }).catch((Err) => {
+                history.push("/tutor/signup")
             })
         }
     }
