@@ -13,7 +13,7 @@ module.exports = {
                     "type": "tutor"
                 })
             }).catch((err) => {
-                throw err
+                reject(err)
             })
 
         })

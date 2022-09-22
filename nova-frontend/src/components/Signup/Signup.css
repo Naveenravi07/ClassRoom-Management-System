@@ -257,6 +257,11 @@ button:hover:after {
     }
 }
 
-.signupbtn{
+.signupbtn {
     background-color: #333;
+}
+
+.createacc {
+    margin-top: 20px;
+    cursor: pointer;
 }

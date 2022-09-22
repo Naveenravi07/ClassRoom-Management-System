@@ -8,10 +8,10 @@ import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 function LoginComp({ type }) {
 
   let history = useHistory()
-  let { user, setUser } = useContext(AuthContext)
-  let { tutor, setTutor } = useContext(TutuorAuthContext)
+  let { setUser } = useContext(AuthContext)
+  let { setTutor } = useContext(TutuorAuthContext)
   useEffect(() => {
-    if (type == "student") {
+    if (type === "student") {
       if (localStorage.getItem("nova")) {
         history.goBack()
       }
@@ -22,6 +22,9 @@ function LoginComp({ type }) {
     }
 
   }, [])
+  let redirectToSignup = () => {
+    type == "student" ? history.push('/student/signup') : history.push("/tutor/signup")
+  }
 
   let [password, setPassword] = useState('')
   let [email, setEmail] = useState('')
@@ -33,8 +36,6 @@ function LoginComp({ type }) {
       email, password
     }
     if (type === "student") {
-
-
       axios.post('/student/login', data).then((userr) => {
         console.log(userr);
         localStorage.setItem("nova", JSON.stringify(userr.data))
@@ -44,7 +45,7 @@ function LoginComp({ type }) {
         history.push('/student/login')
       })
 
-    } else if (type == 'tutor') {
+    } else if (type === 'tutor') {
       axios.post('/tutor/login', data).then((tutorr) => {
         console.log(tutorr);
         localStorage.setItem("tutor", JSON.stringify(tutorr.data))
@@ -66,7 +67,7 @@ function LoginComp({ type }) {
 
             <form className="login100-form validate-form" action="/students/login" method="post">
               <span className="login100-form-title">
-                {type == "student" ? "Student" : "Tutor"} Login
+                {type === "student" ? "Student" : "Tutor"} Login
               </span>
 
               <div className="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
@@ -104,7 +105,7 @@ function LoginComp({ type }) {
               </div>
 
               <div className="text-center p-t-136">
-                <a className="txt2" href="#">
+                <a className="txt2" onClick={redirectToSignup} >
                   Create your Account
                   <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                 </a>
