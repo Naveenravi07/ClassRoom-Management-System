@@ -3,15 +3,24 @@ import './LoginComp.css'
 import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
 import { AuthContext } from '../../contexts/AuthContext'
+import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 
 function LoginComp({ type }) {
 
   let history = useHistory()
   let { user, setUser } = useContext(AuthContext)
+  let { tutor, setTutor } = useContext(TutuorAuthContext)
   useEffect(() => {
-    if (localStorage.getItem("nova")) {
-      history.goBack()
+    if (type == "student") {
+      if (localStorage.getItem("nova")) {
+        history.goBack()
+      }
+    } else {
+      if (localStorage.getItem("tutor") !== null) {
+        history.goBack()
+      }
     }
+
   }, [])
 
   let [password, setPassword] = useState('')
@@ -25,23 +34,21 @@ function LoginComp({ type }) {
     }
     if (type === "student") {
 
-      
+
       axios.post('/student/login', data).then((userr) => {
         console.log(userr);
-        localStorage.clear()
         localStorage.setItem("nova", JSON.stringify(userr.data))
-        setUser(userr.data)
+        setUser(JSON.stringify(userr.data))
         history.push('/student')
       }).catch((err) => {
         history.push('/student/login')
       })
 
     } else if (type == 'tutor') {
-      axios.post('/tutor/login', data).then((tutor) => {
-        console.log(tutor);
-        localStorage.clear()
-        localStorage.setItem("nova", JSON.stringify(tutor.data))
-        setUser(tutor.data)
+      axios.post('/tutor/login', data).then((tutorr) => {
+        console.log(tutorr);
+        localStorage.setItem("tutor", JSON.stringify(tutorr.data))
+        setTutor(JSON.stringify(tutorr.data))
         history.push('/tutor')
       }).catch((err) => {
         history.push('/tutor/login')
@@ -59,7 +66,7 @@ function LoginComp({ type }) {
 
             <form className="login100-form validate-form" action="/students/login" method="post">
               <span className="login100-form-title">
-                Student Login
+                {type == "student" ? "Student" : "Tutor"} Login
               </span>
 
               <div className="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">

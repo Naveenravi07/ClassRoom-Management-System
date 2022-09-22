@@ -1,0 +1,25 @@
+@font-face {
+    font-family: Poppins-Medium;
+    src: url('../../assets//fonts/poppins/Poppins-Medium.ttf');
+}
+
+
+.thomeh1 {
+    display: flex;
+}
+
+.thomemain {
+    margin-top: 50px;
+}
+
+.btnns {
+    margin-top: 30px;
+}
+
+.texthome {
+    margin: auto;
+    font-family: Poppins-Medium;
+}
+.textpara {
+    margin-bottom: 50px;
+  }

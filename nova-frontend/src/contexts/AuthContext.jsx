@@ -5,7 +5,11 @@ import { useContext, useState } from 'react'
 export const AuthContext = createContext(null)
 
 export default function Context({ children }) {
-    let [user, setUser] = useState(localStorage.getItem("nova"))
+    let [user, setUser] = useState({
+        name: "",
+        _id: "",
+        type: ""
+    })
 
     return (
         <AuthContext.Provider value={{ user, setUser }}>

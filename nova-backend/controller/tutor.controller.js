@@ -31,7 +31,11 @@ module.exports = {
                 return reject("passincorrect")
             } else {
                 console.log(doc);
-                return resolve(doc)
+                return resolve({
+                    "id": doc._id,
+                    "name": doc.name,
+                    "type": "tutor"
+                })
             }
         })
     }

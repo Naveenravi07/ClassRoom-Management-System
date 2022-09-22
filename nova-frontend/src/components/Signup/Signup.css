@@ -256,3 +256,7 @@ button:hover:after {
         background: none;
     }
 }
+
+.signupbtn{
+    background-color: #333;
+}

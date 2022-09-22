@@ -32,8 +32,13 @@ module.exports = {
             if (!validPass) {
                 return reject("passincorrect")
             } else {
+            
                 console.log(doc);
-                return resolve(doc)
+                return resolve({
+                    "id": doc._id,
+                    "name": doc.name,
+                    "type": "student"
+                })
             }
         })
     }

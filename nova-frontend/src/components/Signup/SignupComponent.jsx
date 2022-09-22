@@ -1,20 +1,34 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from '../../axios/config'
 import { AuthContext } from '../../contexts/AuthContext';
 import './Signup.css';
 import { useHistory } from 'react-router-dom'
+import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 
 
 function SignupComponent({ type }) {
+    useEffect(() => {
+        if (type == "student") {
+            if (localStorage.getItem("nova")) {
+                history.goBack()
+            }
+        } else {
+            if (localStorage.getItem("tutor") !== null) {
+                history.goBack()
+            }
+        }
+    }, [])
+
     let history = useHistory()
     let [name, setName] = useState('')
     let [phone, setPhone] = useState('')
     let [mail, setMail] = useState('')
     let [password, setPassword] = useState('')
 
-    let { user, setUser } = useContext(AuthContext)
+    let { setUser } = useContext(AuthContext)
+    let { setTutor } = useContext(TutuorAuthContext)
 
-    console.log(user);
+
     let handleSubmit = (e) => {
         e.preventDefault()
 
@@ -24,7 +38,7 @@ function SignupComponent({ type }) {
         if (type === "student") {
             axios.post('/student/signup', data).then((userr) => {
                 console.log(userr);
-                localStorage.clear()
+                localStorage.clear("nova")
                 localStorage.setItem("nova", JSON.stringify(userr.data))
                 setUser(userr.data)
                 history.push("/student")
@@ -32,11 +46,11 @@ function SignupComponent({ type }) {
                 history.push("/student/signup")
             })
         } else if (type == 'tutor') {
-            axios.post('/tutor/signup', data).then((tutor) => {
-                console.log(tutor);
-                localStorage.clear()
-                localStorage.setItem("nova", JSON.stringify(tutor.data))
-                setUser(tutor.data)
+            axios.post('/tutor/signup', data).then((tutorr) => {
+                console.log(tutorr);
+                localStorage.clear("tutor")
+                localStorage.setItem("tutor", JSON.stringify(tutorr.data))
+                setTutor(tutorr.data)
                 history.push("/tutor")
             }).catch((Err) => {
                 history.push("/tutor/signup")
@@ -75,7 +89,7 @@ function SignupComponent({ type }) {
                                 required
                                 onChange={(e) => setPassword(e.target.value)} />
                         </div>
-                        <button type={'submit'} onClick={handleSubmit} id="signupbtn">
+                        <button type={'submit'} onClick={handleSubmit} className='signupbtn' id="signupbtn">
                             <span >Register</span>
                         </button>
 
