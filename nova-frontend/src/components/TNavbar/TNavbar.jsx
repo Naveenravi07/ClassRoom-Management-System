@@ -83,7 +83,10 @@ function TNavbar() {
                                         {tutor ?
                                             <li><a className="dropdown-item itemcur" onClick={handleLogout}>Logout</a></li>
                                             :
-                                            <li><a className="dropdown-item itemcur" onClick={() => history.push('/tutor/login')}>Login</a></li>
+                                            <div>
+                                                <li><a class="dropdown-item itemcur" onClick={() => history.push('/tutor/login')}>Login</a></li>
+                                                <li><a class="dropdown-item itemcur" onClick={() => history.push('/tutor/signup')}>Signup</a></li>
+                                            </div>
                                         }
 
                                         <li><a className="dropdown-item" onClick={() => history.push("/tutor")} >Something else here</a></li>

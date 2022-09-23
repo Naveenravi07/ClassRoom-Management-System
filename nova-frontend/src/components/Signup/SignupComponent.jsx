@@ -102,7 +102,7 @@ function SignupComponent({ type }) {
                         {err ? <p className='errmsg'> {err.data}</p> : ""}
                         <div className="text-center p-t-136 createacc">
                             <a className="txt2" onClick={redirectToLogin} >
-                                Create your Account
+                               Already Have An Account ?
                                 <i className="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                             </a>
                         </div>

@@ -80,7 +80,10 @@ function SNavbar() {
                                     {user ?
                                         <li><a class="dropdown-item itemcur" onClick={handleLogout}>Logout</a></li>
                                         :
-                                        <li><a class="dropdown-item itemcur" onClick={() => history.push('/student/login')}>Login</a></li>
+                                        <div>
+                                            <li><a class="dropdown-item itemcur" onClick={() => history.push('/student/login')}>Login</a></li>
+                                            <li><a class="dropdown-item itemcur" onClick={() => history.push('/student/signup')}>Signup</a></li>
+                                        </div>
                                     }
 
                                     <li><a class="dropdown-item" onClick={() => history.push("/student")} >Something else here</a></li>
@@ -98,3 +101,4 @@ function SNavbar() {
 }
 
 export default SNavbar
+

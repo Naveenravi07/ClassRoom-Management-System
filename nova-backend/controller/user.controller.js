@@ -7,7 +7,7 @@ module.exports = {
 
     doSignup: async (userData) => {
         return new Promise(async (resolve, reject) => {
-            let { mail } = userData
+            let { mail,name } = userData
             let check = await db.get().collection(collection.STUDENT_COLLECTION).findOne({ mail: mail })
             if (check) {
                 return reject("accexists")
@@ -16,7 +16,7 @@ module.exports = {
             db.get().collection(collection.STUDENT_COLLECTION).insertOne(userData).then((data, err) => {
                 resolve({
                     "id": data.insertedId,
-                    "name": data.name,
+                    "name": name,
                     "type": "student"
                 })
             }).catch((err) => {
