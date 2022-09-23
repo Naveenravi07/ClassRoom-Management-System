@@ -5,13 +5,15 @@
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon server.js"
+        "start":"concurrently \"npm run server\" \"cd../nova-frontend && npm start\"",
+        "server": "nodemon server.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
         "bcrypt": "^5.0.1",
+        "concurrently": "^7.4.0",
         "cors": "^2.8.5",
         "dotenv": "^9.0.2",
         "express": "^4.17.1",

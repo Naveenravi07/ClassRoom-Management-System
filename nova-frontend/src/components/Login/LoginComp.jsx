@@ -23,12 +23,12 @@ function LoginComp({ type }) {
 
   }, [])
   let redirectToSignup = () => {
-    type == "student" ? history.push('/student/signup') : history.push("/tutor/signup")
+    type === "student" ? history.push('/student/signup') : history.push("/tutor/signup")
   }
 
   let [password, setPassword] = useState('')
   let [email, setEmail] = useState('')
-
+  let [err, setErr] = useState(null)
   let handleSubmit = (e) => {
     e.preventDefault()
 
@@ -42,6 +42,10 @@ function LoginComp({ type }) {
         setUser(JSON.stringify(userr.data))
         history.push('/student')
       }).catch((err) => {
+        if (err.response) {
+          console.log(err.response);
+          setErr(err.response)
+        }
         history.push('/student/login')
       })
 
@@ -52,6 +56,10 @@ function LoginComp({ type }) {
         setTutor(JSON.stringify(tutorr.data))
         history.push('/tutor')
       }).catch((err) => {
+        if (err.response) {
+          console.log(err.response);
+          setErr(err.response)
+        }
         history.push('/tutor/login')
       })
     }
@@ -66,6 +74,7 @@ function LoginComp({ type }) {
             </div>
 
             <form className="login100-form validate-form" action="/students/login" method="post">
+
               <span className="login100-form-title">
                 {type === "student" ? "Student" : "Tutor"} Login
               </span>
@@ -87,7 +96,7 @@ function LoginComp({ type }) {
                   <i className="fa fa-lock" aria-hidden="true"></i>
                 </span>
               </div>
-
+              {err ? <p className='errmsg'> {err.data}</p> : ""}
               <div className="container-login100-form-btn">
                 <button onClick={handleSubmit}
                   className="login100-form-btn">

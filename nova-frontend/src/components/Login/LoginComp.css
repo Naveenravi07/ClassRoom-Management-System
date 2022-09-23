@@ -481,3 +481,7 @@ iframe {
     opacity: 1;
   }
 }
+
+.errmsg {
+  color: red;
+}

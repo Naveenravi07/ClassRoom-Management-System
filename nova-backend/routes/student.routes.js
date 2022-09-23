@@ -21,6 +21,14 @@ router.post('/login', (req, res) => {
     console.log(req.body);
     userController.doLogin(req.body).then((doc) => {
         res.send(doc)
+    }).catch((err) => {
+        if (err == "passincorrect") {
+            res.status(400).send("Invalid Password")
+        } else if (err == "nodoc") {
+            res.status(404).send("No Account found with this details")
+        } else {
+            res.status(500).send("Internal server error")
+        }
     })
 })
 module.exports = router;
