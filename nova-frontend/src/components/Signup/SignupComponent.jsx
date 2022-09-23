@@ -24,12 +24,12 @@ function SignupComponent({ type }) {
     let [phone, setPhone] = useState('')
     let [mail, setMail] = useState('')
     let [password, setPassword] = useState('')
-
+    let [err, setErr] = useState(null)
     let { setUser } = useContext(AuthContext)
     let { setTutor } = useContext(TutuorAuthContext)
 
     let redirectToLogin = () => {
-        type == "student" ? history.push('/student/login') : history.push("/tutor/login")
+        type === "student" ? history.push('/student/login') : history.push("/tutor/login")
     }
 
     let handleSubmit = (e) => {
@@ -40,13 +40,15 @@ function SignupComponent({ type }) {
         }
         if (type === "student") {
             axios.post('/student/signup', data).then((userr) => {
-
                 console.log(userr);
                 localStorage.setItem("nova", JSON.stringify(userr.data))
                 setUser(JSON.stringify(userr.data))
                 history.push("/student")
             }).catch((Err) => {
-                history.push("/student/signup")
+                if (Err.response) {
+                    console.log(Err.response);
+                    setErr(Err.response)
+                }
             })
         } else if (type === 'tutor') {
             axios.post('/tutor/signup', data).then((tutorr) => {
@@ -55,7 +57,10 @@ function SignupComponent({ type }) {
                 setTutor(JSON.stringify(tutorr.data))
                 history.push("/tutor")
             }).catch((Err) => {
-                history.push("/tutor/signup")
+                if (Err.response) {
+                    console.log(Err.response);
+                    setErr(Err.response)
+                }
             })
         }
     }
@@ -94,7 +99,7 @@ function SignupComponent({ type }) {
                         <button type={'submit'} onClick={handleSubmit} className='signupbtn' id="signupbtn">
                             <span >Register</span>
                         </button>
-
+                        {err ? <p className='errmsg'> {err.data}</p> : ""}
                         <div className="text-center p-t-136 createacc">
                             <a className="txt2" onClick={redirectToLogin} >
                                 Create your Account

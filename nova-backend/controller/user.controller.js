@@ -6,7 +6,12 @@ const mongoose = require('mongoose');
 module.exports = {
 
     doSignup: async (userData) => {
-        return new Promise(async (resolve) => {
+        return new Promise(async (resolve, reject) => {
+            let { mail } = userData
+            let check = await db.get().collection(collection.STUDENT_COLLECTION).findOne({ mail: mail })
+            if (check) {
+                return reject("accexists")
+            }
             userData.password = await bcrypt.hash(userData.password, 10)
             db.get().collection(collection.STUDENT_COLLECTION).insertOne(userData).then((data, err) => {
                 resolve({
@@ -15,7 +20,7 @@ module.exports = {
                     "type": "student"
                 })
             }).catch((err) => {
-                throw err
+                return reject("servererr")
             })
         })
     },
@@ -32,7 +37,6 @@ module.exports = {
             if (!validPass) {
                 return reject("passincorrect")
             } else {
-            
                 console.log(doc);
                 return resolve({
                     "id": doc._id,

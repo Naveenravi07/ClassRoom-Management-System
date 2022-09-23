@@ -10,11 +10,15 @@ router.post('/signup', (req, res) => {
         tutorController.signupTutor(req.body).then((user) => {
             res.send(user)
         }).catch((err) => {
-            res.status(500)
+            if (err == "accexists") {
+                res.status(403).send("Account Already Exists With This Email")
+            } else {
+                res.status(500).send("Internal server error")
+            }
         })
     }
     catch (err) {
-        res.status(500)
+        res.status(500).send("Internal server error")
     }
 })
 

@@ -14,6 +14,12 @@ router.post('/signup', (req, res) => {
     console.log(req.body);
     userController.doSignup(req.body).then((details) => {
         res.send(details)
+    }).catch((err) => {
+        if (err == "accexists") {
+            res.status(403).send("Account Already Exists With This Email")
+        } else {
+            res.status(500).send("Internal server error")
+        }
     })
 })
 

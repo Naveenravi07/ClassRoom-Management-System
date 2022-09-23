@@ -46,7 +46,7 @@ function LoginComp({ type }) {
           console.log(err.response);
           setErr(err.response)
         }
-        history.push('/student/login')
+
       })
 
     } else if (type === 'tutor') {
@@ -60,7 +60,6 @@ function LoginComp({ type }) {
           console.log(err.response);
           setErr(err.response)
         }
-        history.push('/tutor/login')
       })
     }
   }

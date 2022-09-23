@@ -5,6 +5,11 @@ let bcrypt = require("bcrypt")
 module.exports = {
     signupTutor: (data) => {
         return new Promise(async (resolve, reject) => {
+            let {mail}=data
+            let check = await db.get().collection(collections.TUTOR_COLLECTION).findOne({ mail: mail })
+            if (check) {
+                return reject("accexists")
+            }
             data.password = await bcrypt.hash(data.password, 10)
             await db.get().collection(collections.TUTOR_COLLECTION).insertOne(data).then((res) => {
                 resolve({
@@ -13,7 +18,7 @@ module.exports = {
                     "type": "tutor"
                 })
             }).catch((err) => {
-                reject(err)
+                return reject("servererr")
             })
 
         })
