@@ -48,7 +48,7 @@ module.exports = {
 
     createAlliance: (data) => {
         return new Promise(async (resolve, reject) => {
-            data.time = new Date("MM/DD/YYYY")
+            data.createdAt = new Date().toLocaleDateString("en-US")
             db.get().collection(collections.ALLIANCES_COLLECTION).insertOne(data).then((resolvedAlc) => {
                 resolve({
                     "id": resolvedAlc.insertedId,
@@ -63,5 +63,5 @@ module.exports = {
     createHexaCode: () => {
         const id = crypto.randomBytes(16).toString("hex");
         return id
-    }
+},
 }

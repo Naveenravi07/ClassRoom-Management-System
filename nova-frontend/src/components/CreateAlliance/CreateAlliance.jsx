@@ -22,7 +22,6 @@ function CreateAlliance() {
     let [phone, setPhone] = useState("")
     let [lname, setLname] = useState("")
     let [email, setEmail] = useState("")
-    let [date, setDate] = useState("")
     let [image, setImage] = useState(null)
     let id
     const handleSubmit = (e) => {
@@ -36,7 +35,7 @@ function CreateAlliance() {
             "alliance": alc,
             "email": email,
             "phone": phone,
-            "date": date,
+            "tutorid": parsedUser.id
         }
 
         axios.post('/tutor/uploadImage', formData, {
@@ -45,6 +44,7 @@ function CreateAlliance() {
             }
         }).then((response) => {
             details.image = response.data.id
+
             axios.post('/tutor/create-alliance', details).then((response) => {
                 console.log(response);
                 history.push("/tutor")
@@ -109,14 +109,6 @@ function CreateAlliance() {
 
             <div class="form-group">
 
-                <div class="form-input">
-                    <label for="chequeno">DATE OF BIRTH</label>
-                    <input type={"date"}
-                        value={date} onChange={(e) => {
-                            setDate(e.target.value)
-                        }}
-                        className='dateinp' name="dob" id="chequeno" required />
-                </div>
                 <div class="form-input">
                     <label for="chequeno">Profile Image</label>
                     <input onChange={(e) => setImage(e.target.files[0])}
