@@ -1,11 +1,12 @@
 let db = require("../config/db.config")
 let collections = require("../config/collections.config")
 let bcrypt = require("bcrypt")
+let crypto = require("crypto")
 
 module.exports = {
     signupTutor: (data) => {
         return new Promise(async (resolve, reject) => {
-            let {mail}=data
+            let { mail } = data
             let check = await db.get().collection(collections.TUTOR_COLLECTION).findOne({ mail: mail })
             if (check) {
                 return reject("accexists")
@@ -43,5 +44,24 @@ module.exports = {
                 })
             }
         })
+    },
+
+    createAlliance: (data) => {
+        return new Promise(async (resolve, reject) => {
+            data.time = new Date("MM/DD/YYYY")
+            db.get().collection(collections.ALLIANCES_COLLECTION).insertOne(data).then((resolvedAlc) => {
+                resolve({
+                    "id": resolvedAlc.insertedId,
+                })
+            }).catch((err) => {
+                return reject("servererr")
+            })
+
+        })
+    },
+
+    createHexaCode: () => {
+        const id = crypto.randomBytes(16).toString("hex");
+        return id
     }
 }

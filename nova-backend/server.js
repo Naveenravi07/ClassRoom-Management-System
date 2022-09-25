@@ -5,10 +5,12 @@ const app = express();
 const userRoute = require("./routes/student.routes");
 const tutorRoute = require("./routes/tutor.routes")
 var db = require("./config/db.config");
+var fileupload = require("express-fileupload");
 
 
 // middleware
 app.use(express.json());
+app.use(fileupload());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
