@@ -53,7 +53,7 @@ function TNavbar() {
                                 <li className="nav-item">
                                     <NavLink
                                         exact
-                                        to="/about"
+                                        to="/tutor/alliances"
                                         activeClassName="active"
                                         className="nav-links"
                                         onClick={handleClick}

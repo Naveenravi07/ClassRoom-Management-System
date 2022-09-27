@@ -5,8 +5,7 @@ import { useState } from 'react'
 export const TutuorAuthContext = createContext(null)
 
 export default function TutorContext({ children }) {
-    let [tutor, setTutor] = useState(null)
-
+    let [tutor, setTutor] = useState()
     return (
         <TutuorAuthContext.Provider value={{ tutor, setTutor }}>
             {children}

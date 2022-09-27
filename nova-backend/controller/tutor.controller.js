@@ -2,6 +2,7 @@ let db = require("../config/db.config")
 let collections = require("../config/collections.config")
 let bcrypt = require("bcrypt")
 let crypto = require("crypto")
+let { ObjectId } = require("mongodb")
 
 module.exports = {
     signupTutor: (data) => {
@@ -63,5 +64,12 @@ module.exports = {
     createHexaCode: () => {
         const id = crypto.randomBytes(16).toString("hex");
         return id
-},
+    },
+    getAlliances: (userid) => {
+        return new Promise(async (resolve, reject) => {
+            console.log(userid);
+            let docs = await db.get().collection(collections.ALLIANCES_COLLECTION).find({ tutorid: userid.id }).toArray()
+            resolve(docs)
+        })
+    },
 }

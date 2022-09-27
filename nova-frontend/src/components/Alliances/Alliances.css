@@ -1,0 +1,184 @@
+.mycontainer {
+    display: flex;
+}
+
+
+.thomeh1 {
+    display: flex;
+}
+
+.thomemain {
+    margin-top: 50px;
+}
+
+.btnns {
+    margin-top: 30px;
+}
+
+.texthome {
+    margin: auto;
+}
+
+.textpara {
+    margin-bottom: 50px;
+}
+
+.teachh1 {
+    color: #111;
+}
+
+.imgalign {
+    margin: auto;
+}
+
+.mttop {
+    margin-top: 40px;
+}
+
+.addoverflow {
+    overflow-x: auto;
+}
+
+.btn2 {
+    background: #000;
+    border: 0;
+    height: 30px;
+    width: 100px;
+    border: 5px;
+    color: white;
+    margin-bottom: 40px;
+}
+
+
+
+.flexing {
+    display: flex;
+    background-color: #202020;
+}
+
+.linkstyle {
+    margin: auto;
+    color: #fff;
+}
+
+.align-bottom {
+    vertical-align: bottom
+}
+
+.invite {
+    margin-left: 30px;
+}
+
+th,
+td {
+    width: 80px
+}
+
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 48
+}
+
+body {
+    background: #f9f9f9;
+    font-family: "Roboto", sans-serif;
+}
+
+.alcsidiv {
+    visibility: visible;
+}
+
+.fake {
+    visibility: hidden;
+}
+
+.main-content {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.table {
+    border-spacing: 0 15px;
+    border-collapse: separate;
+}
+
+.table thead tr th,
+.table thead tr td,
+.table tbody tr th,
+.table tbody tr td {
+    vertical-align: middle;
+    border: none;
+    overflow-x: auto;
+    margin: auto;
+}
+
+.table thead tr th:nth-last-child(1),
+.table thead tr td:nth-last-child(1),
+.table tbody tr th:nth-last-child(1),
+.table tbody tr td:nth-last-child(1) {
+    text-align: center;
+}
+
+.table tbody tr {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.table tbody tr td {
+    background: #fff;
+}
+
+.table tbody tr td:nth-child(1) {
+    border-radius: 5px 0 0 5px;
+}
+
+.table tbody tr td:nth-last-child(1) {
+    border-radius: 0 5px 5px 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info__img img {
+    margin-right: 15px;
+    height: 55px;
+    width: 55px;
+    border-radius: 45px;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.active-circle {
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    margin-right: 5px;
+    display: inline-block;
+}
+
+.xover {
+    overflow-x: auto;
+}
+
+.iconsetting {
+    display: none;
+}
+
+@media only screen and (max-device-width: 480px) {
+    .iconsetting {
+        display: block;
+        color: #000;
+    }
+
+    .alignadd {
+        display: none;
+    }
+}

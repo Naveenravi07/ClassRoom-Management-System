@@ -5,9 +5,9 @@ import TNavbar from '../../components/TNavbar/TNavbar'
 function THomePage() {
     return (
         <div>
-            <TNavbar />
+            < TNavbar />
             <THome />
-        </div>
+        </div >
     )
 }
 
