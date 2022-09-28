@@ -2,33 +2,26 @@ import React, { useEffect, useContext, useState } from 'react'
 import './Alliances.css'
 import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
-import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
+
 
 function Alliances() {
     let [alcs, setAlcs] = useState([])
     let history = useHistory()
 
-    // getting tutor global state
-    let { tutor, setTutor } = useContext(TutuorAuthContext)
-    console.log("itutor" + tutor);
+    let tutor = localStorage.getItem("tutor")
     let parsedUser = JSON.parse(tutor)
-    console.log(parsedUser.id);
-    
     let data = {
         "id": parsedUser.id
     }
-    useEffect(() => {
 
+    useEffect(() => {
         axios.post("/tutor/alliances", data).then((response) => {
-            console.log(response.data);
             setAlcs(response.data)
         }).catch((err) => {
             console.log("api call err");
             console.log(err);
         })
-
     }, [])
-
 
     return (
         <div>
@@ -42,7 +35,7 @@ function Alliances() {
                             <div className="texthome">
                                 <h2 className="text text-center">Manage your scholar activities easily</h2>
                                 <p className="textpara"> Manage your students fees, classes, notes , attendence and much more </p>
-                                <div class="btnns">
+                                <div className="btnns">
                                     <a onClick={() => history.push('/tutor/create-alliance')} className="btn btn-primary">Create allaince</a>
                                 </div>
                             </div>
@@ -75,53 +68,57 @@ function Alliances() {
                                         </tr>
 
                                     </thead>
+                                    {alcs.length > 0 ?
+                                        <tbody>
+                                            {
 
-                                    <tbody>
-                                        {alcs.length > 0 ?
-                                            <tr>
-                                                <td>
-                                                    <div className="user-info">
-                                                        <div className="user-info__img">
-                                                            <img src="https://preview.redd.it/5vro0cwvl9m31.jpg?width=720&format=pjpg&auto=webp&s=b552d48fcc46a739fd412efa91cc4ff82a630c63" alt=" Group Icon" />
-                                                        </div>
-                                                        <div className="user-info__basic">
-                                                            <h5 className="mb-0"> Hii</h5>
-                                                            <p className="text-muted mb-0"> 60 Students </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <span className="active-circle bg-success"></span> Active
-                                                </td>
+                                                alcs.map((obj, index) =>
+                                                    <tr>
+                                                        <td>
+                                                            <div className="user-info">
+                                                                <div className="user-info__img">
+                                                                    <img src="https://preview.redd.it/5vro0cwvl9m31.jpg?width=720&format=pjpg&auto=webp&s=b552d48fcc46a739fd412efa91cc4ff82a630c63" alt=" Group Icon" />
+                                                                </div>
+                                                                <div className="user-info__basic">
+                                                                    <h5 className="mb-0"> {obj.alliance} </h5>
+                                                                    <p className="text-muted mb-0"> {obj.studentscount} Students </p>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <span className="active-circle bg-success"></span> Active
+                                                        </td>
 
-                                                <td> Ravi </td>
-                                                <td>
-                                                    <div className='alignadd'>
-                                                        <button className="btn2">Manage</button>
-                                                    </div>
-                                                    <div className='iconsetting'>
-                                                        <span class="material-symbols-outlined">
-                                                            settings
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className='alignadd'>
-                                                        <button className='btn2' >
-                                                            Invite
-                                                        </button>
-                                                    </div>
+                                                        <td> {obj.createdAt} </td>
+                                                        <td>
+                                                            <div className='alignadd'>
+                                                                <button className="btn2">Manage</button>
+                                                            </div>
+                                                            <div className='iconsetting'>
+                                                                <span class="material-symbols-outlined">
+                                                                    settings
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className='alignadd'>
+                                                                <button className='btn2' >
+                                                                    Invite
+                                                                </button>
+                                                            </div>
 
-                                                    <div className='iconsetting'>
-                                                        <span class="material-symbols-outlined">
-                                                            group_add
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            </tr> : <h1>No Alliace</h1>}
+                                                            <div className='iconsetting'>
+                                                                <span class="material-symbols-outlined">
+                                                                    group_add
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                )
 
-                                    </tbody>
-
+                                            }
+                                        </tbody>
+                                        : <h1>No Alliace</h1>}
                                 </table>
                             </div>
                         </section>

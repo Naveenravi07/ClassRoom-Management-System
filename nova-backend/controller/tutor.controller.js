@@ -50,6 +50,11 @@ module.exports = {
     createAlliance: (data) => {
         return new Promise(async (resolve, reject) => {
             data.createdAt = new Date().toLocaleDateString("en-US")
+            data.studentscount = 0
+            let dummyobj = {
+                studentid: ""
+            }
+            data.students = [dummyobj]
             db.get().collection(collections.ALLIANCES_COLLECTION).insertOne(data).then((resolvedAlc) => {
                 resolve({
                     "id": resolvedAlc.insertedId,
