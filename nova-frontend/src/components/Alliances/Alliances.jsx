@@ -2,10 +2,12 @@ import React, { useEffect, useContext, useState } from 'react'
 import './Alliances.css'
 import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
-
+import Modal from '../Modal/Modal'
 
 function Alliances() {
     let [alcs, setAlcs] = useState([])
+    let [modal, setModal] = useState(false)
+    let [url, setUrl] = useState(null)
     let history = useHistory()
 
     let tutor = localStorage.getItem("tutor")
@@ -32,11 +34,13 @@ function Alliances() {
         console.log(data);
 
         axios.post('/tutor/invitestudent', data).then((res) => {
-            console.log(res);
+            setUrl(res.data.url)
+            setModal(true)
         })
     }
     return (
         <div>
+
             <div>
                 <div className="conatiner-fluid mttop">
                     <div className="row">
@@ -58,7 +62,9 @@ function Alliances() {
             </div>
 
             <div class="container-fluid">
-
+                {
+                    modal && <Modal text={`Your Invite Code is :- ${url}`} copy={true} />
+                }
                 <div className="row">
                     <div className="col-xl-12 addoverflow" >
                         <section className="main-content">
@@ -80,6 +86,7 @@ function Alliances() {
                                         </tr>
 
                                     </thead>
+
                                     {alcs.length > 0 ?
                                         <tbody>
                                             {
@@ -126,7 +133,9 @@ function Alliances() {
                                                             </div>
                                                         </td>
                                                     </tr>
+
                                                 )
+
 
                                             }
                                         </tbody>

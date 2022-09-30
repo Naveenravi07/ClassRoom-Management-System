@@ -1,0 +1,18 @@
+.mainmodal {
+    display: flex;
+
+}
+
+.popup {
+    background-color: #06d6a0;
+    margin-top: 10px;
+    margin-left: auto;
+
+    width: 100%;
+    text-align: center;
+    top: 10px;
+    border-radius: 10px;
+}
+.btncopy{
+    cursor: pointer;
+}
