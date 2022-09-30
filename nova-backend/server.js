@@ -4,6 +4,7 @@ const cors = require("cors");
 const app = express();
 const userRoute = require("./routes/student.routes");
 const tutorRoute = require("./routes/tutor.routes")
+let mainRoute = require("./routes/index.routes")
 var db = require("./config/db.config");
 var fileupload = require("express-fileupload");
 
@@ -23,6 +24,7 @@ db.connect((err) => {
 
 app.use('/student', userRoute)
 app.use('/tutor', tutorRoute)
+app.use("/", mainRoute)
 
 const PORT = process.env.PORT || 1080;
 app.listen(PORT, () => console.log(`SERVER RUNNING ON PORT ${PORT}`));

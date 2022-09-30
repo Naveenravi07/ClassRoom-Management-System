@@ -70,10 +70,15 @@ router.post('/create-alliance', (req, res) => {
 })
 router.post('/alliances', (req, res) => {
     console.log("req recived");
-    console.log(req.body);
     tutorController.getAlliances(req.body).then((response) => {
-        console.log(response);
         res.send(response)
+    })
+})
+
+router.post('/invitestudent', async (req, res) => {
+    console.log("req endpoint");
+    await tutorController.generateInviteLink(req.body).then((data) => {
+        res.send(data)
     })
 })
 

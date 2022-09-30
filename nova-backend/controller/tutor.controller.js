@@ -3,6 +3,7 @@ let collections = require("../config/collections.config")
 let bcrypt = require("bcrypt")
 let crypto = require("crypto")
 let { ObjectId } = require("mongodb")
+const { generateFromEmail, generateUsername } = require("unique-username-generator");
 
 module.exports = {
     signupTutor: (data) => {
@@ -77,4 +78,27 @@ module.exports = {
             resolve(docs)
         })
     },
+    generateInviteLink: (data) => {
+        return new Promise(async (resolve, reject) => {
+            
+            let { alliance, id, tutorid } = data
+            let random = generateFromEmail(
+                alliance,
+                6
+            );
+            random = random.replace(/\s/g, '')
+            random = random.toLowerCase()
+            let find = await db.get().collection(collections.ALLIANCEINVITE_LINKS).findOne({ alliance: id })
+            if (find) {
+                return resolve(find)
+            }
+            let obj = {
+                url: random,
+                tutorid: tutorid,
+                alliance: id
+            }
+            let dc = await db.get().collection(collections.ALLIANCEINVITE_LINKS).insertOne(obj)
+            resolve(obj)
+        })
+    }
 }

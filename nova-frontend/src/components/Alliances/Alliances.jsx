@@ -23,6 +23,18 @@ function Alliances() {
         })
     }, [])
 
+    let handleInvite = (allianceName, id, tutorid) => {
+        let data = {
+            "alliance": allianceName,
+            "id": id,
+            "tutorid": tutorid
+        }
+        console.log(data);
+
+        axios.post('/tutor/invitestudent', data).then((res) => {
+            console.log(res);
+        })
+    }
     return (
         <div>
             <div>
@@ -102,7 +114,7 @@ function Alliances() {
                                                         </td>
                                                         <td>
                                                             <div className='alignadd'>
-                                                                <button className='btn2' >
+                                                                <button onClick={() => handleInvite(`${obj.alliance}`, `${obj._id}`, `${obj.tutorid}`)} className='btn2' >
                                                                     Invite
                                                                 </button>
                                                             </div>
