@@ -9,29 +9,22 @@ function Alliances() {
     let [modal, setModal] = useState(false)
     let [url, setUrl] = useState(null)
     let history = useHistory()
-
+    let data
     let tutor = localStorage.getItem("tutor")
-    let parsedUser = JSON.parse(tutor)
-    let data = {
-        "id": parsedUser.id
+    if (!tutor) {
+        data = {
+            "id": ""
+        }
+    } else {
+        let parsedUser = JSON.parse(tutor)
+        data = {
+            "id": parsedUser.id
+        }
     }
 
     useEffect(() => {
         axios.post("/tutor/alliances", data).then((response) => {
-            let arr = []
             setAlcs(response.data)
-            // response.data.map((obj) => {
-            //     arr.push(obj.image)
-            // })
-            // console.log(arr);
-
-            // axios.post("/tutor/getImages", arr, {
-            //     responseType: "arraybuffer"
-            // }).then((images) => {
-            //     let image = Buffer.from(images.data, 'binary').toString('base64')
-            //     console.log(image);
-            // })
-
         }).catch((err) => {
             console.log("api call err");
             console.log(err);
@@ -100,7 +93,7 @@ function Alliances() {
                                         </tr>
 
                                     </thead>
-
+                                    {console.log(alcs.length)}
                                     {alcs.length > 0 ?
                                         <tbody>
                                             {
