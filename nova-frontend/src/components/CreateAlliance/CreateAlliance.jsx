@@ -3,6 +3,7 @@ import axios from '../../axios/config'
 import './CreateAlliance.css'
 import { useHistory } from 'react-router-dom'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
+import firebase from '../../firebase/config'
 
 function CreateAlliance() {
     let { tutor, setTutor } = useContext(TutuorAuthContext)
@@ -37,23 +38,18 @@ function CreateAlliance() {
             "phone": phone,
             "tutorid": parsedUser.id
         }
-
-        axios.post('/tutor/uploadImage', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        }).then((response) => {
-            details.image = response.data.id
-
-            axios.post('/tutor/create-alliance', details).then((response) => {
-                console.log(response);
-                history.push("/tutor")
+      
+        firebase.storage().ref(`/image/${image.name}`).put(image).then(({ ref }) => {
+            ref.getDownloadURL().then((url) => {
+                details.url = url
+                axios.post('/tutor/create-alliance', details).then((response) => {
+                    console.log(response);
+                    history.push("/tutor/alliances")
+                })
             })
         }).catch((err) => {
-            console.log(err);
+            history.push("/tutor/create-alliance")
         })
-
-
 
     }
     return (

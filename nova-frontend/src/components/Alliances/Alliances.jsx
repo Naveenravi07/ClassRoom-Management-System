@@ -18,11 +18,25 @@ function Alliances() {
 
     useEffect(() => {
         axios.post("/tutor/alliances", data).then((response) => {
+            let arr = []
             setAlcs(response.data)
+            // response.data.map((obj) => {
+            //     arr.push(obj.image)
+            // })
+            // console.log(arr);
+
+            // axios.post("/tutor/getImages", arr, {
+            //     responseType: "arraybuffer"
+            // }).then((images) => {
+            //     let image = Buffer.from(images.data, 'binary').toString('base64')
+            //     console.log(image);
+            // })
+
         }).catch((err) => {
             console.log("api call err");
             console.log(err);
         })
+
     }, [])
 
     let handleInvite = (allianceName, id, tutorid) => {
@@ -92,11 +106,11 @@ function Alliances() {
                                             {
 
                                                 alcs.map((obj, index) =>
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <td>
                                                             <div className="user-info">
                                                                 <div className="user-info__img">
-                                                                    <img src="https://preview.redd.it/5vro0cwvl9m31.jpg?width=720&format=pjpg&auto=webp&s=b552d48fcc46a739fd412efa91cc4ff82a630c63" alt=" Group Icon" />
+                                                                    <img src={obj.url} alt=" Group Icon" />
                                                                 </div>
                                                                 <div className="user-info__basic">
                                                                     <h5 className="mb-0"> {obj.alliance} </h5>

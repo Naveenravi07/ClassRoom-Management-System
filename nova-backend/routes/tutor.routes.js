@@ -82,4 +82,15 @@ router.post('/invitestudent', async (req, res) => {
     })
 })
 
+router.post("/getImages", (req, res) => {
+    let imgIds = req.body
+    console.log(imgIds);
+    let tets = imgIds[0]
+    console.log(tets)
+    // imgIds.map((img) => {
+    res.sendFile(__dirname, `/public/images/Alliances/${tets}.jpg`)
+    // })
+    console.log("send");
+})
+
 module.exports = router
