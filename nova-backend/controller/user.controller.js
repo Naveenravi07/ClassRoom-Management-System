@@ -54,9 +54,9 @@ module.exports = {
                 },
                 {
                     $project: {
-                        "students":0,
-                        "phone":0,
-                        "tutorid":0
+                        "students": 0,
+                        "phone": 0,
+                        "tutorid": 0
                     }
                 }
             ]).toArray()
@@ -123,10 +123,7 @@ module.exports = {
                 return reject("invalidLink")
             }
 
-            console.log("User Id \t" + student);
-
             let checking = await validUrl[0].conf.students.findIndex(students => students.studentid.toString() == student)
-            console.log(checking);
 
             if (checking !== -1) {
                 return reject("already joined")
@@ -140,6 +137,11 @@ module.exports = {
                     }
                 )
             }
+            delete validUrl[0].conf.students
+            delete validUrl[0].conf.tutorid
+            delete validUrl[0].creatorarr
+            console.log(validUrl);
+
             resolve(validUrl)
         })
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import './Alliances.css'
 import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
@@ -61,7 +61,6 @@ function Alliances({ type }) {
             "id": id,
             "tutorid": tutorid
         }
-        console.log(data);
 
         axios.post('/tutor/invitestudent', data).then((res) => {
             setUrl(res.data.url)
@@ -70,7 +69,6 @@ function Alliances({ type }) {
     }
 
     let handleJoin = (e) => {
-        console.log(data.id.length);
         if (data.id.length < 4) {
             console.log("less than 4");
             window.alert("You must login to join an alliance")
@@ -84,7 +82,8 @@ function Alliances({ type }) {
                 }
                 axios.post('/student/join-alliance', details).then((response) => {
                     console.log(response.data);
-                    setAlcs(response.data)
+                    alcs.push(response.data[0].conf)
+                    setAlcs([...alcs])
                 })
             }
         }
@@ -145,7 +144,7 @@ function Alliances({ type }) {
                                             <th className='align-bottom'>Status</th>
                                             <th className='align-bottom'>Created At</th>
                                             <th className='align-bottom'>Actions</th>
-                                            <th className='align-bottom invite'>Invite</th>
+                                            {type == "tutor" ? <th className='align-bottom invite'>Invite</th> : <Fragment />}
                                         </tr>
 
                                     </thead>
@@ -181,7 +180,7 @@ function Alliances({ type }) {
                                                                 </span>
                                                             </div>
                                                         </td>
-                                                        <td>
+                                                        {type === "tutor" ? <td>
                                                             <div className='alignadd'>
                                                                 <button onClick={() => handleInvite(`${obj.alliance}`, `${obj._id}`, `${obj.tutorid}`)} className='btn2' >
                                                                     Invite
@@ -193,7 +192,7 @@ function Alliances({ type }) {
                                                                     group_add
                                                                 </span>
                                                             </div>
-                                                        </td>
+                                                        </td> : <Fragment></Fragment>}
                                                     </tr>
 
                                                 )
