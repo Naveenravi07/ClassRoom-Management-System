@@ -38,12 +38,12 @@ router.post('/login', (req, res) => {
     })
 })
 
-// router.post("/alliances", (req, res) => {
-//     console.log(req.body);
-//     userController.getAlliances(req.body).then((result)=>{
-//         res.send(result)
-//     })
-// })
+router.post("/alliances", (req, res) => {
+    console.log(req.body);
+    userController.getAlliances(req.body).then((result)=>{
+        res.send(result)
+    })
+})
 
 router.post('/join-alliance', async (req, res) => {
     console.log(req.body);

@@ -48,7 +48,21 @@ module.exports = {
     },
     getAlliances: (data) => {
         return new Promise(async (resolve, reject) => {
-            db.get().collection(collection.ALLIANCES_COLLECTION).findOne()
+            let doc = await db.get().collection(collection.ALLIANCES_COLLECTION).aggregate([
+                {
+                    $match: { "students.studentid": data.id }
+                },
+                {
+                    $project: {
+                        "students":0,
+                        "phone":0,
+                        "tutorid":0
+                    }
+                }
+            ]).toArray()
+
+            console.log(doc);
+            resolve(doc)
         })
     },
 

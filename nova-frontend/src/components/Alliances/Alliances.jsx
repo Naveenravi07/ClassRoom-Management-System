@@ -47,9 +47,10 @@ function Alliances({ type }) {
                 console.log(err);
             })
         } else {
-            // axios.post("/student/alliances",data).then((res)=>{
-
-            // })
+            axios.post("/student/alliances", data).then((res) => {
+                console.log(res);
+                setAlcs(res.data)
+            })
         }
 
     }, [])
