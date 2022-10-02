@@ -1,15 +1,11 @@
 import { createContext } from 'react'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 
 export const AuthContext = createContext(null)
 
 export default function Context({ children }) {
-    let [user, setUser] = useState({
-        name: "",
-        _id: "",
-        type: ""
-    })
+    let [user, setUser] = useState(null)
 
     return (
         <AuthContext.Provider value={{ user, setUser }}>

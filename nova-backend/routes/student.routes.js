@@ -37,4 +37,25 @@ router.post('/login', (req, res) => {
         }
     })
 })
+
+// router.post("/alliances", (req, res) => {
+//     console.log(req.body);
+//     userController.getAlliances(req.body).then((result)=>{
+//         res.send(result)
+//     })
+// })
+
+router.post('/join-alliance', async (req, res) => {
+    console.log(req.body);
+    await userController.joinAlliance(req.body).then((result) => {
+        res.send(result)
+    }).catch((err) => {
+        if (err == "invalidLink") {
+            res.status(404).send("Invalid Invite Link")
+        } else if (err == "already joined") {
+            res.status(400).send("You Are Already In This Alliance")
+        }
+    })
+})
+
 module.exports = router;

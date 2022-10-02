@@ -6,7 +6,7 @@ function AlliancesPage() {
     return (
         <div>
             <TNavbar />
-            <Alliances />
+            <Alliances type="tutor" />
         </div>
     )
 }

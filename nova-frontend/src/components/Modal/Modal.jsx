@@ -1,6 +1,6 @@
 import React from 'react'
 import './Modal.css'
-function Modal({ text, copy }) {
+function Modal({ text, copy, mt }) {
 
     let handleCopy = () => {
         let code = text.split(":- ").pop()

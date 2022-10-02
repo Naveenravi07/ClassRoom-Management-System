@@ -11,6 +11,7 @@ function SNavbar() {
     let parsedUser = {
         alt: "manage"
     }
+    console.log(user);
     if (user == null) {
         boolean = false
     } else {
@@ -50,7 +51,7 @@ function SNavbar() {
                             <li className="nav-item">
                                 <NavLink
                                     exact
-                                    to="/about"
+                                    to="/student/alliances"
                                     activeClassName="active"
                                     className="nav-links"
                                     onClick={handleClick}

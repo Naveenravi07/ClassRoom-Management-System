@@ -1,34 +1,56 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './Alliances.css'
 import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
 import Modal from '../Modal/Modal'
 
-function Alliances() {
+function Alliances({ type }) {
     let [alcs, setAlcs] = useState([])
     let [modal, setModal] = useState(false)
     let [url, setUrl] = useState(null)
+    let [toggle, setToogle] = useState(false)
+    let [inv, setInv] = useState(null)
     let history = useHistory()
     let data
-    let tutor = localStorage.getItem("tutor")
-    if (!tutor) {
-        data = {
-            "id": ""
+    if (type === "tutor") {
+        let tutor = localStorage.getItem("tutor")
+        if (!tutor) {
+            data = {
+                "id": ""
+            }
+        } else {
+            let parsedUser = JSON.parse(tutor)
+            data = {
+                "id": parsedUser.id
+            }
         }
     } else {
-        let parsedUser = JSON.parse(tutor)
-        data = {
-            "id": parsedUser.id
+        let user = localStorage.getItem("nova")
+        if (!user) {
+            data = {
+                "id": ""
+            }
+        } else {
+            let parsedUser = JSON.parse(user)
+            data = {
+                "id": parsedUser.id
+            }
         }
     }
 
     useEffect(() => {
-        axios.post("/tutor/alliances", data).then((response) => {
-            setAlcs(response.data)
-        }).catch((err) => {
-            console.log("api call err");
-            console.log(err);
-        })
+        if (type == "tutor") {
+            axios.post("/tutor/alliances", data).then((response) => {
+                setAlcs(response.data)
+            }).catch((err) => {
+                console.log("api call err");
+                console.log(err);
+            })
+        } else {
+            // axios.post("/student/alliances",data).then((res)=>{
+
+            // })
+        }
 
     }, [])
 
@@ -45,6 +67,28 @@ function Alliances() {
             setModal(true)
         })
     }
+
+    let handleJoin = (e) => {
+        console.log(data.id.length);
+        if (data.id.length < 4) {
+            console.log("less than 4");
+            window.alert("You must login to join an alliance")
+        } else {
+            if (inv === null) {
+                e.preventDefault()
+            } else {
+                let details = {
+                    "student": data.id,
+                    "inv": inv
+                }
+                axios.post('/student/join-alliance', details).then((response) => {
+                    console.log(response.data);
+                    setAlcs(response.data)
+                })
+            }
+        }
+
+    }
     return (
         <div>
 
@@ -58,10 +102,21 @@ function Alliances() {
                             <div className="texthome">
                                 <h2 className="text text-center">Manage your scholar activities easily</h2>
                                 <p className="textpara"> Manage your students fees, classes, notes , attendence and much more </p>
-                                <div className="btnns">
+                                {type === "tutor" ? <div className="btnns">
                                     <a onClick={() => history.push('/tutor/create-alliance')} className="btn btn-primary">Create allaince</a>
-                                </div>
+                                </div> : <div className="btnns">
+                                    <a onClick={() => setToogle(true)} className="btn btn-primary">Join allaince</a>
+
+                                    {
+                                        toggle && <div className='alcinviteinp'>
+                                            <label > Enter the invite code : </label>
+                                            <input autoFocus className='inp' onChange={(e) => setInv(e.target.value)} type="text" />
+                                            <button className='joinbtn' onClick={handleJoin}> Submit</button>
+                                        </div>
+                                    }
+                                </div>}
                             </div>
+
 
                         </div>
                     </div>
@@ -93,7 +148,6 @@ function Alliances() {
                                         </tr>
 
                                     </thead>
-                                    {console.log(alcs.length)}
                                     {alcs.length > 0 ?
                                         <tbody>
                                             {
