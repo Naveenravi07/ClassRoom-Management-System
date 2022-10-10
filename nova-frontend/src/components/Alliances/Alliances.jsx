@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useContext } from 'react'
 import './Alliances.css'
 import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
 import Modal from '../Modal/Modal'
+import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 
 function Alliances({ type }) {
     let [alcs, setAlcs] = useState([])
@@ -12,8 +13,8 @@ function Alliances({ type }) {
     let [inv, setInv] = useState(null)
     let history = useHistory()
     let data
+    let { tutor } = useContext(TutuorAuthContext)
     if (type === "tutor") {
-        let tutor = localStorage.getItem("tutor")
         if (!tutor) {
             data = {
                 "id": ""
@@ -52,7 +53,7 @@ function Alliances({ type }) {
             })
         }
 
-    }, [])
+    }, [tutor])
 
     let handleInvite = (allianceName, id, tutorid) => {
         let data = {
@@ -159,7 +160,7 @@ function Alliances({ type }) {
                                                                 pathname: '/student/view-alliance',
                                                                 state: {
                                                                     id: obj._id,
-                                                                    alc:obj.alliance,
+                                                                    alc: obj.alliance,
 
                                                                 }
                                                             })
@@ -167,7 +168,7 @@ function Alliances({ type }) {
                                                                     pathname: `/tutor/view-alliance`,
                                                                     state: {
                                                                         id: obj._id,
-                                                                        alc:obj.alliance,
+                                                                        alc: obj.alliance,
                                                                     }
                                                                 })
                                                         }}>

@@ -73,7 +73,6 @@ module.exports = {
     },
     getAlliances: (userid) => {
         return new Promise(async (resolve, reject) => {
-            console.log(userid);
             let docs = await db.get().collection(collections.ALLIANCES_COLLECTION).find({ tutorid: userid.id }).toArray()
             resolve(docs)
         })

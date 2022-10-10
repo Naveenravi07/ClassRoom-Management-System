@@ -69,7 +69,6 @@ router.post('/create-alliance', (req, res) => {
     })
 })
 router.post('/alliances', (req, res) => {
-    console.log("req recived");
     tutorController.getAlliances(req.body).then((response) => {
         res.send(response)
     })
@@ -82,15 +81,12 @@ router.post('/invitestudent', async (req, res) => {
     })
 })
 
-router.post("/getImages", (req, res) => {
-    let imgIds = req.body
-    console.log(imgIds);
-    let tets = imgIds[0]
-    console.log(tets)
-    // imgIds.map((img) => {
-    res.sendFile(__dirname, `/public/images/Alliances/${tets}.jpg`)
-    // })
-    console.log("send");
+
+router.post("/create-class", (req, res) => {
+    console.log(req.body);
+    tutorController.createClass(req.body).then((response) => {
+        
+    })
 })
 
 module.exports = router

@@ -137,7 +137,8 @@ a.aj_btn:hover {
 
 .mainbg {
   background-color: #202020;
-  height: 100vh;
+  min-height: 100vh;
+
 }
 
 .texts {
@@ -146,4 +147,15 @@ a.aj_btn:hover {
 
 .icon1 {
   color: white;
+}
+
+.loader {
+  margin: auto;
+  display: flex;
+  vertical-align: middle;
+  padding-top: 50px;
+}
+
+.load {
+  margin: auto;
 }
