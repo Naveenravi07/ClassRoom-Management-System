@@ -4,7 +4,6 @@ function Modal({ text, copy, mt }) {
 
     let handleCopy = () => {
         let code = text.split(":- ").pop()
-        code = "http://localhost:3000/i/" + code
         navigator.clipboard.writeText(code)
     }
     return (
