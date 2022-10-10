@@ -60,8 +60,6 @@ module.exports = {
                     }
                 }
             ]).toArray()
-
-            console.log(doc);
             resolve(doc)
         })
     },

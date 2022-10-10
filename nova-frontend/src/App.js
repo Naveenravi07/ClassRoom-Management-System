@@ -11,6 +11,7 @@ import THomePage from './Pages/Tutors/THomePage';
 import TLogin from './Pages/Tutors/TLogin';
 import CreateAlliancePage from './Pages/Tutors/CreateAlliancePage';
 import AlliancesPage from './Pages/Tutors/AlliancesPage';
+import ViewAlliancePage from './Pages/Tutors/ViewAlliancePage';
 
 // Importing contexts
 import { AuthContext } from './contexts/AuthContext';
@@ -44,6 +45,8 @@ function App() {
         <Route path='/tutor/login'> <TLogin /> </Route>
         <Route path='/tutor/create-alliance'> <CreateAlliancePage /> </Route>
         <Route path='/tutor/alliances'> <AlliancesPage /> </Route>
+        <Route path="/tutor/view-alliance"  > <ViewAlliancePage /> </Route>
+        
       </BrowserRouter>
     </div>
   );

@@ -39,7 +39,7 @@ function Alliances({ type }) {
     }
 
     useEffect(() => {
-        if (type == "tutor") {
+        if (type === "tutor") {
             axios.post("/tutor/alliances", data).then((response) => {
                 setAlcs(response.data)
             }).catch((err) => {
@@ -48,7 +48,6 @@ function Alliances({ type }) {
             })
         } else {
             axios.post("/student/alliances", data).then((res) => {
-                console.log(res);
                 setAlcs(res.data)
             })
         }
@@ -144,17 +143,34 @@ function Alliances({ type }) {
                                             <th className='align-bottom'>Status</th>
                                             <th className='align-bottom'>Created At</th>
                                             <th className='align-bottom'>Actions</th>
-                                            {type == "tutor" ? <th className='align-bottom invite'>Invite</th> : <Fragment />}
+                                            {type === "tutor" ? <th className='align-bottom invite'>Invite</th> : <Fragment />}
                                         </tr>
 
                                     </thead>
                                     {alcs.length > 0 ?
                                         <tbody>
                                             {
-
                                                 alcs.map((obj, index) =>
-                                                    <tr key={index}>
-                                                        <td>
+
+                                                    <tr className='tablerow' key={index}>
+                                                        <td onClick={() => {
+                                                            console.log(obj);
+                                                            type === "student" ? history.push({
+                                                                pathname: '/student/view-alliance',
+                                                                state: {
+                                                                    id: obj._id,
+                                                                    alc:obj.alliance,
+
+                                                                }
+                                                            })
+                                                                : history.push({
+                                                                    pathname: `/tutor/view-alliance`,
+                                                                    state: {
+                                                                        id: obj._id,
+                                                                        alc:obj.alliance,
+                                                                    }
+                                                                })
+                                                        }}>
                                                             <div className="user-info">
                                                                 <div className="user-info__img">
                                                                     <img src={obj.url} alt=" Group Icon" />

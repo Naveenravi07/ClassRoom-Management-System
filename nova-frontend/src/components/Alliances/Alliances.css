@@ -13,6 +13,7 @@
 
 .btnns {
     margin-top: 30px;
+    margin-left: 10px;
 }
 
 .texthome {
@@ -21,6 +22,7 @@
 
 .textpara {
     margin-bottom: 50px;
+    text-align: center;
 }
 
 .teachh1 {
@@ -85,10 +87,7 @@ td {
         'opsz' 48
 }
 
-body {
-    background: #f9f9f9;
-    font-family: "Roboto", sans-serif;
-}
+
 
 .alcsidiv {
     visibility: visible;
@@ -130,9 +129,7 @@ body {
     border-radius: 5px;
 }
 
-.table tbody tr td {
-    background: #fff;
-}
+
 
 .table tbody tr td:nth-child(1) {
     border-radius: 5px 0 0 5px;
@@ -200,4 +197,15 @@ body {
 
 .joinbtn {
     background-color: #202020;
+}
+
+.tablerow {
+    background-color: ghostwhite;
+}
+
+.tablerow:hover {
+    background-color: aqua;
+    transform: scale(1.03);
+    transition-duration: 0.3s;
+    border-radius: 10px;
 }
