@@ -83,9 +83,10 @@ router.post('/invitestudent', async (req, res) => {
 
 
 router.post("/create-class", (req, res) => {
-    console.log(req.body);
     tutorController.createClass(req.body).then((response) => {
-        
+        res.send(response)
+    }).catch((err) => {
+        res.status(500).send("Internal Server Error")
     })
 })
 

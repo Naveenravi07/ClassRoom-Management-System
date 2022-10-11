@@ -4,6 +4,7 @@ let bcrypt = require("bcrypt")
 let crypto = require("crypto")
 let { ObjectId } = require("mongodb")
 const { generateFromEmail, generateUsername } = require("unique-username-generator");
+const { url } = require("inspector")
 
 module.exports = {
     signupTutor: (data) => {
@@ -79,7 +80,7 @@ module.exports = {
     },
     generateInviteLink: (data) => {
         return new Promise(async (resolve, reject) => {
-            
+
             let { alliance, id, tutorid } = data
             let random = generateFromEmail(
                 alliance,
@@ -98,6 +99,32 @@ module.exports = {
             }
             let dc = await db.get().collection(collections.ALLIANCEINVITE_LINKS).insertOne(obj)
             resolve(obj)
+        })
+    },
+
+    createClass: (data) => {
+        return new Promise(async (resolve, reject) => {
+            var d = new Date();
+            let date = d.toDateString()
+            let hour = d.getHours();
+            let minute = d.getMinutes();
+
+            let conf = {
+                "tutor": data.id,
+                "students": [],
+                "createdAt": {
+                    "date": date,
+                    "hour": hour,
+                    "minute": minute
+                },
+                "active": "true"
+            }
+            await db.get().collection(collections.CLASSES).insertOne(conf).then((inserted) => {
+                conf.url = inserted.insertedId
+                resolve(conf)
+            }).catch((err) => {
+                reject("db err")
+            })
         })
     }
 }

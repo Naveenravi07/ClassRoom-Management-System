@@ -17,3 +17,6 @@ Note. Nova is under developement. If you are a developer and intrested to contri
 ![](documents/Screenshot%202022-09-30%20083529.png)
 
 ![](documents/Screenshot%202022-09-30%20083633.png)
+
+
+![](documents/Screenshot%202022-10-10%20063657.png)

@@ -1,13 +1,14 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import axios from '../../axios/config'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 import { useHistory } from 'react-router-dom'
 import './Create_Class.css'
-
+import Modal from '../Modal/Modal'
 
 function Create_Class() {
     let history = useHistory()
     let { tutor } = useContext(TutuorAuthContext)
+    let [err, setErr] = useState(false)
     tutor = JSON.parse(tutor)
     let data
     if (tutor) {
@@ -16,8 +17,12 @@ function Create_Class() {
         }
     }
     let handleNewMeeting = () => {
-        axios.post('/tutor/create-class', data).then((res) => {
-
+        axios.post('/tutor/create-class ', data).then((res) => {
+            setErr(false)
+            console.log(res.data.url);
+            history.push(`/meeting/${res.data.url}`)
+        }).catch((err) => {
+            setErr(true)
         })
     }
     return (
@@ -32,7 +37,7 @@ function Create_Class() {
                     <p className='paratext'>
                         We re-engineered the service that we built for secure business meetings, Google Meet, to make it free and available for all.
                     </p>
-
+                    {err && < Modal text="An Error Occured. Please Retry" copy={false} />}
                     <button onClick={handleNewMeeting} className='newmeetbtn'>New Meeting</button>
 
                 </div>
