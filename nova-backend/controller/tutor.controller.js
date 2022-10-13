@@ -103,6 +103,7 @@ module.exports = {
     },
 
     createClass: (data) => {
+        console.log(data);
         return new Promise(async (resolve, reject) => {
             var d = new Date();
             let date = d.toDateString()
@@ -117,8 +118,9 @@ module.exports = {
                     "hour": hour,
                     "minute": minute
                 },
-                "alliance":data.id,
-                "active": "true"
+                "alliance":data.alc,
+                "active": "true",
+                "tutorname":data.name
             }
             await db.get().collection(collections.CLASSES).insertOne(conf).then((inserted) => {
                 conf.url = inserted.insertedId
@@ -126,6 +128,12 @@ module.exports = {
             }).catch((err) => {
                 reject("db err")
             })
+        })
+    },
+    getClasses: (id) => {
+        return new Promise(async (resolve, reject) => {
+            let alcs = await db.get().collection(collections.CLASSES).find({ alliance: id }).toArray()
+            resolve(alcs)
         })
     }
 }

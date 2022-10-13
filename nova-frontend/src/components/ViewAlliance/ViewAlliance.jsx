@@ -49,7 +49,7 @@ function ViewAlliance({ data, type }) {
           </div>
         </div>
         <V_ALC_NAV />
-        {type == "tutor" ? <Create_Class /> : <Fragment></Fragment>}
+        {type == "tutor" ? <Create_Class id={data.id} /> : <Fragment></Fragment>}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
       </div>}
 

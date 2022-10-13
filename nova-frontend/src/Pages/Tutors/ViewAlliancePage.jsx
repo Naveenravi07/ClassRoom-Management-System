@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import ViewAlliance from '../../components/ViewAlliance/ViewAlliance'
 import TNavbar from '../../components/TNavbar/TNavbar'
 import { useLocation } from 'react-router-dom'
-
+import List_Classes from '../../components/ListClasses/List_Classes'
 
 function ViewAlliancePage() {
     let location = useLocation()
@@ -18,6 +18,7 @@ function ViewAlliancePage() {
         <div>
             <TNavbar />
             <ViewAlliance type="tutor" data={obj} />
+            <List_Classes  data={obj} />
         </div>
     )
 }
