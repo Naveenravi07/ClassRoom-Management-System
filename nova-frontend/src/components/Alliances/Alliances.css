@@ -209,3 +209,8 @@ td {
     transition-duration: 0.3s;
     border-radius: 10px;
 }
+.alertmsg{
+    color: red;
+    font-size: 18px;
+    margin-top: 10px;
+}

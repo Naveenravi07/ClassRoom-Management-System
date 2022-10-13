@@ -9,7 +9,7 @@ function Modal({ text, copy, mt }) {
     return (
         <div className='modalroot'>
             <div className='mainmodal'>
-                <div className='popup'>
+                <div style={{marginTop:`${mt}`}} className='popup'>
                     <h4> {text} </h4>
                     {
                         copy && <span className="material-symbols-outlined btncopy" onClick={handleCopy}>

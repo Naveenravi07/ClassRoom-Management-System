@@ -19,8 +19,8 @@ function Alliances({ type }) {
     let data
     let { tutor } = useContext(TutuorAuthContext)
     let { user } = useContext(AuthContext)
-
-
+    let [err, setErr] = useState(false)
+    let [msg, setMsg] = useState(null)
 
     useEffect(() => {
 
@@ -48,15 +48,15 @@ function Alliances({ type }) {
                 setSpinner(true)
                 setTimeout(() => {
                     setSpinner(false)
-                    setAlcs([])
                 }, 2000)
+                setAlcs([])
             } else {
-                setSpinner(false)
                 let parsedUser = JSON.parse(user)
                 data = {
                     "id": parsedUser.id
                 }
                 axios.post("/student/alliances", data).then((res) => {
+                    console.log(res.data);
                     setAlcs(res.data)
                 })
             }
@@ -78,24 +78,29 @@ function Alliances({ type }) {
     }
 
     let handleJoin = (e) => {
-        if (data.id.length < 4) {
-            console.log("less than 4");
-            window.alert("You must login to join an alliance")
+        if (inv === null) {
+            e.preventDefault()
         } else {
-            if (inv === null) {
-                e.preventDefault()
-            } else {
-                let details = {
-                    "student": data.id,
-                    "inv": inv
-                }
-                axios.post('/student/join-alliance', details).then((response) => {
-                    console.log(response.data);
-                    alcs.push(response.data[0].conf)
-                    setAlcs([...alcs])
-                })
+            if (!localStorage.getItem("nova")) {
+                setErr(true)
+
             }
+            let details = {
+                "student": JSON.parse(localStorage.getItem("nova")).id,
+                "inv": inv
+            }
+
+            axios.post('/student/join-alliance', details).then((response) => {
+                console.log(response.data);
+                alcs.push(response.data[0].conf)
+                setAlcs([...alcs])
+            }).catch((err) => {
+                console.log("err");
+                console.log(err);
+                setMsg(err.response)
+            })
         }
+        // }
 
     }
     return (
@@ -103,7 +108,7 @@ function Alliances({ type }) {
 
             <div>
                 <div className="conatiner-fluid mttop">
-                    <div className="row">
+                    < div className="row" >
                         <div className="col-lg-6 col-xl-6 mycontainer" >
                             <img className="img img-fluid img-thumbnail imgalign" src={require("../../assets/images/alliances.jpg")} alt="Novaimg" />
                         </div>
@@ -120,6 +125,8 @@ function Alliances({ type }) {
                                         toggle && <div className='alcinviteinp'>
                                             <label > Enter the invite code : </label>
                                             <input autoFocus className='inp' onChange={(e) => setInv(e.target.value)} type="text" />
+                                            {msg ? <p className='alertmsg'> {msg.data}</p>:""}
+                                            {err && <Modal text="You Must Login" />}
                                             <button className='joinbtn' onClick={handleJoin}> Submit</button>
                                         </div>
                                     }
@@ -128,9 +135,9 @@ function Alliances({ type }) {
 
 
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div >
+                </div >
+            </div >
 
             <div class="container-fluid">
                 {

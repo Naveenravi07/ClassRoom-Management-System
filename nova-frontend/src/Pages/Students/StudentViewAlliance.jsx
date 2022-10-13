@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ViewAlliance from '../../components/ViewAlliance/ViewAlliance'
-import TNavbar from '../../components/TNavbar/TNavbar'
+import SNavbar from '../../components/SNavbar/SNavbar'
 import { useLocation } from 'react-router-dom'
 
 
-function ViewAlliancePage() {
+function StudentViewAlliance() {
     let location = useLocation()
+    console.log(location.state);
     let allianceId = location.state.id
     let alcname = location.state.alc
 
@@ -16,10 +17,10 @@ function ViewAlliancePage() {
 
     return (
         <div>
-            <TNavbar />
-            <ViewAlliance type="tutor" data={obj} />
+            <SNavbar />
+            <ViewAlliance type="student" data={obj} />
         </div>
     )
 }
 
-export default ViewAlliancePage
+export default StudentViewAlliance

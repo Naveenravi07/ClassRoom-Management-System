@@ -116,8 +116,8 @@ module.exports = {
                     },
                 ]
             ).toArray()
-
-            if (!validUrl) {
+                console.log(validUrl);
+            if (validUrl.length==0) {
                 return reject("invalidLink")
             }
 

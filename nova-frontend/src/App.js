@@ -12,6 +12,7 @@ import TLogin from './Pages/Tutors/TLogin';
 import CreateAlliancePage from './Pages/Tutors/CreateAlliancePage';
 import AlliancesPage from './Pages/Tutors/AlliancesPage';
 import ViewAlliancePage from './Pages/Tutors/ViewAlliancePage';
+import StudentViewAlliance from './Pages/Students/StudentViewAlliance';
 
 // Importing contexts
 import { AuthContext } from './contexts/AuthContext';
@@ -38,6 +39,7 @@ function App() {
         <Route path='/student/signup' > <SignupScreen /> </Route>
         <Route path='/student/login'> <Login /> </Route>
         <Route path="/student/alliances"> <SAlliance /> </Route>
+        <Route path="/student/view-alliance"  > <StudentViewAlliance /> </Route>
 
         {/* Tutors */}
         <Route exact path='/tutor'> <THomePage /> </Route>
