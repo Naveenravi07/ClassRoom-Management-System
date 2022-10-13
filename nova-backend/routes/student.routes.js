@@ -39,8 +39,8 @@ router.post('/login', (req, res) => {
 })
 
 router.post("/alliances", (req, res) => {
-    console.log(req.body);
     userController.getAlliances(req.body).then((result)=>{
+        console.log(result);
         res.send(result)
     })
 })

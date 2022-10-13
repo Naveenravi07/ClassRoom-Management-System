@@ -117,6 +117,7 @@ module.exports = {
                     "hour": hour,
                     "minute": minute
                 },
+                "alliance":data.id,
                 "active": "true"
             }
             await db.get().collection(collections.CLASSES).insertOne(conf).then((inserted) => {

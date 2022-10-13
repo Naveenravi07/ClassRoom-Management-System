@@ -4,6 +4,9 @@ import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
 import Modal from '../Modal/Modal'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
+import { AuthContext } from '../../contexts/AuthContext'
+import Spinner from 'react-bootstrap/Spinner'
+
 
 function Alliances({ type }) {
     let [alcs, setAlcs] = useState([])
@@ -11,36 +14,28 @@ function Alliances({ type }) {
     let [url, setUrl] = useState(null)
     let [toggle, setToogle] = useState(false)
     let [inv, setInv] = useState(null)
+    let [spinner, setSpinner] = useState(false)
     let history = useHistory()
     let data
     let { tutor } = useContext(TutuorAuthContext)
-    if (type === "tutor") {
-        if (!tutor) {
-            data = {
-                "id": ""
-            }
-        } else {
-            let parsedUser = JSON.parse(tutor)
-            data = {
-                "id": parsedUser.id
-            }
-        }
-    } else {
-        let user = localStorage.getItem("nova")
-        if (!user) {
-            data = {
-                "id": ""
-            }
-        } else {
-            let parsedUser = JSON.parse(user)
-            data = {
-                "id": parsedUser.id
-            }
-        }
-    }
+    let { user } = useContext(AuthContext)
+
+
 
     useEffect(() => {
+
         if (type === "tutor") {
+            if (!tutor) {
+                setSpinner(true)
+                setTimeout(() => {
+                    setSpinner(false)
+                }, 3000)
+            } else {
+                let parsedUser = JSON.parse(tutor)
+                data = {
+                    "id": parsedUser.id
+                }
+            }
             axios.post("/tutor/alliances", data).then((response) => {
                 setAlcs(response.data)
             }).catch((err) => {
@@ -48,12 +43,26 @@ function Alliances({ type }) {
                 console.log(err);
             })
         } else {
-            axios.post("/student/alliances", data).then((res) => {
-                setAlcs(res.data)
-            })
+
+            if (!user) {
+                setSpinner(true)
+                setTimeout(() => {
+                    setSpinner(false)
+                    setAlcs([])
+                }, 2000)
+            } else {
+                setSpinner(false)
+                let parsedUser = JSON.parse(user)
+                data = {
+                    "id": parsedUser.id
+                }
+                axios.post("/student/alliances", data).then((res) => {
+                    setAlcs(res.data)
+                })
+            }
         }
 
-    }, [tutor])
+    }, [tutor, user])
 
     let handleInvite = (allianceName, id, tutorid) => {
         let data = {
@@ -148,6 +157,8 @@ function Alliances({ type }) {
                                         </tr>
 
                                     </thead>
+
+                                    {spinner && <Spinner animation="border" variant="danger" className='load' role="status" size='lg' />}
                                     {alcs.length > 0 ?
                                         <tbody>
                                             {
@@ -217,18 +228,18 @@ function Alliances({ type }) {
 
                                             }
                                         </tbody>
-                                        : <h1>No Alliace</h1>}
+                                        : < h1 >  No Alliance</h1>}
                                 </table>
                             </div>
                         </section>
                     </div>
                 </div>
 
-            </div>
+            </div >
 
 
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-        </div>
+        </div >
 
     )
 }

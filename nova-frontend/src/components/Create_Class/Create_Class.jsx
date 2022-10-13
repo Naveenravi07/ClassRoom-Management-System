@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import './Create_Class.css'
 import Modal from '../Modal/Modal'
 
-function Create_Class() {
+function Create_Class({id}) {
     let history = useHistory()
     let { tutor } = useContext(TutuorAuthContext)
     let [err, setErr] = useState(false)
@@ -13,7 +13,8 @@ function Create_Class() {
     let data
     if (tutor) {
         data = {
-            "id": tutor.id
+            "id": tutor.id,
+            "alc":id
         }
     }
     let handleNewMeeting = () => {
