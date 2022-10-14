@@ -118,9 +118,10 @@ module.exports = {
                     "hour": hour,
                     "minute": minute
                 },
-                "alliance":data.alc,
+                "alliance": data.alc,
                 "active": "true",
-                "tutorname":data.name
+                "tutorname": data.name,
+                "timeString": d.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
             }
             await db.get().collection(collections.CLASSES).insertOne(conf).then((inserted) => {
                 conf.url = inserted.insertedId

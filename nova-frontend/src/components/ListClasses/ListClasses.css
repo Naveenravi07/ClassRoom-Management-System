@@ -123,7 +123,7 @@
 }
 
 .tablerow:hover {
-    background-color: aqua;
+    background-color: white;
     transform: scale(1.03);
     transition-duration: 0.3s;
     border-radius: 10px;
@@ -145,4 +145,7 @@
 }
 .spacer{
     margin-left: 13px;
+}
+.listtablerow{
+    background: darkgrey;
 }

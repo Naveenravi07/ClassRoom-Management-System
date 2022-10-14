@@ -27,29 +27,23 @@ function Alliances({ type }) {
         if (type === "tutor") {
             if (!tutor) {
                 setSpinner(true)
-                setTimeout(() => {
-                    setSpinner(false)
-                }, 3000)
             } else {
                 let parsedUser = JSON.parse(tutor)
                 data = {
                     "id": parsedUser.id
                 }
+                axios.post("/tutor/alliances", data).then((response) => {
+                    setAlcs(response.data)
+                }).catch((err) => {
+                    console.log("api call err");
+                    console.log(err);
+                })
             }
-            axios.post("/tutor/alliances", data).then((response) => {
-                setAlcs(response.data)
-            }).catch((err) => {
-                console.log("api call err");
-                console.log(err);
-            })
+
         } else {
 
             if (!user) {
                 setSpinner(true)
-                setTimeout(() => {
-                    setSpinner(false)
-                }, 2000)
-                setAlcs([])
             } else {
                 let parsedUser = JSON.parse(user)
                 data = {
@@ -125,7 +119,7 @@ function Alliances({ type }) {
                                         toggle && <div className='alcinviteinp'>
                                             <label > Enter the invite code : </label>
                                             <input autoFocus className='inp' onChange={(e) => setInv(e.target.value)} type="text" />
-                                            {msg ? <p className='alertmsg'> {msg.data}</p>:""}
+                                            {msg ? <p className='alertmsg'> {msg.data}</p> : ""}
                                             {err && <Modal text="You Must Login" />}
                                             <button className='joinbtn' onClick={handleJoin}> Submit</button>
                                         </div>

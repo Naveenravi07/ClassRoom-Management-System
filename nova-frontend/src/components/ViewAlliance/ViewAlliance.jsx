@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState,Fragment } from 'react'
+import React, { useEffect, useContext, useState, Fragment } from 'react'
 import './ViewAlliance.css'
 import V_ALC_NAV from './ViewAllianceNav/ViewAllianceNav'
 import Create_Class from '../Create_Class/Create_Class'
@@ -24,12 +24,6 @@ function ViewAlliance({ data, type }) {
     } else {
       if (tutor === null || tutor === undefined) {
         setLoading(true)
-
-        setTimeout(() => {
-          if (tutor === null || tutor === undefined) {
-            history.push("/tutor/login")
-          }
-        }, 4000)
       } else {
         setLoading(false)
       }

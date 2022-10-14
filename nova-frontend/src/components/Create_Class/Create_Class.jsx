@@ -4,8 +4,9 @@ import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 import { useHistory } from 'react-router-dom'
 import './Create_Class.css'
 import Modal from '../Modal/Modal'
+import List_Classes from '../ListClasses/List_Classes'
 
-function Create_Class({id}) {
+function Create_Class({ id }) {
     let history = useHistory()
     let { tutor } = useContext(TutuorAuthContext)
     let [err, setErr] = useState(false)
@@ -14,15 +15,15 @@ function Create_Class({id}) {
     if (tutor) {
         data = {
             "id": tutor.id,
-            "name":tutor.name,
-            "alc":id
+            "name": tutor.name,
+            "alc": id
         }
     }
     let handleNewMeeting = () => {
         axios.post('/tutor/create-class', data).then((res) => {
             setErr(false)
             console.log(res.data.url);
-            history.push(`/meeting/${res.data.url}`)
+            // history.push(`/meeting/${res.data.url}`)
         }).catch((err) => {
             setErr(true)
         })

@@ -1,15 +1,18 @@
 import React, { useEffect, useState, Fragment } from 'react'
 import axios from '../../axios/config'
 import "./ListClasses.css"
-import { useHistory } from 'react-router-dom'
+import Spinner from 'react-bootstrap/Spinner'
 
 function List_Classes({ type, data }) {
-    let history = useHistory()
-    let obj
     let [classes, setClasses] = useState([])
+    let [loading, setLoading] = useState(true)
+
     useEffect(() => {
         axios.post('/tutor/getClasses', data).then((res) => {
             setClasses(res.data)
+            console.log(res)
+            // setCount(res.data.students.length)
+            setLoading(false)
         })
     }, [])
     return (
@@ -33,9 +36,12 @@ function List_Classes({ type, data }) {
 
                     </thead>
                     <tbody>
+                        {loading ? <Spinner animation="border" variant="danger" className='load' role="status" size='lg' /> : ""}
+
                         {
                             classes.map((obj, index) =>
-                                <tr className='tablerow' key={index}>
+
+                                <tr className='tablerow listtablerow' key={index}>
                                     <td >
                                         <div className="user-info">
                                             <div className="user-info__img">
@@ -43,15 +49,19 @@ function List_Classes({ type, data }) {
                                             </div>
                                             <div className="user-info__basic">
                                                 <h5 className="mb-0"> {obj.tutorname} </h5>
-                                                <p className="text-muted mb-0">80Students  <br />  in meeting</p>
+
+                                                <p className="text-muted mb-0">{obj.students.length}  Students <br />  in meeting</p>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        <span className="active-circle bg-success"></span> {obj.active == "true" ? "Live" : "Meeting Ended"}
+                                        <span className="active-circle bg-success"></span> {obj.active === "true" ? "Live" : "Meeting Ended"}
                                     </td>
 
-                                    <td> {obj.createdAt.date} </td>
+                                    <td> {obj.createdAt.date}
+                                        <br />
+                                        {obj.timeString}
+                                    </td>
                                     <td>
                                         <div className='alignadd'>
                                             <button className="btn2">JOIN</button>
