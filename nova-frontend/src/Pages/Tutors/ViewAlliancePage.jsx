@@ -18,7 +18,7 @@ function ViewAlliancePage() {
         <div>
             <TNavbar />
             <ViewAlliance type="tutor" data={obj} />
-            <List_Classes  data={obj} />
+            <List_Classes type="tutor" data={obj} />
         </div>
     )
 }

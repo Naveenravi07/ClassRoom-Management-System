@@ -133,6 +133,7 @@
     background-color: #202020;
     padding-top: 40px;
     color: white;
+    min-height: 100vh;
 }
 
 .classh1 {
@@ -143,9 +144,11 @@
     color: white;
     font-weight: 500 !important;
 }
-.spacer{
+
+.spacer {
     margin-left: 13px;
 }
-.listtablerow{
+
+.listtablerow {
     background: darkgrey;
 }

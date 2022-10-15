@@ -57,4 +57,16 @@ router.post('/join-alliance', async (req, res) => {
     })
 })
 
+router.post('/getClasses', (req, res) => {
+    try {
+        userController.getClasses(req.body).then((response) => {
+            res.send(response)
+        })
+    } catch (err) {
+        res.status(500).send("Internal server error")
+    }
+
+})
+
+
 module.exports = router;

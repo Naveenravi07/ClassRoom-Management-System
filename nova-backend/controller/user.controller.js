@@ -116,8 +116,8 @@ module.exports = {
                     },
                 ]
             ).toArray()
-                console.log(validUrl);
-            if (validUrl.length==0) {
+            console.log(validUrl);
+            if (validUrl.length == 0) {
                 return reject("invalidLink")
             }
 
@@ -141,6 +141,13 @@ module.exports = {
             console.log(validUrl);
 
             resolve(validUrl)
+        })
+    },
+
+    getClasses: (data) => {
+        return new Promise(async (resolve, reject) => {
+            let classes = await db.get().collection(collection.CLASSES).find({ alliance: data.id }).toArray()
+            resolve(classes)
         })
     }
 }
