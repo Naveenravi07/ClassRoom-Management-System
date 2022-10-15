@@ -6,7 +6,7 @@ import Modal from '../Modal/Modal'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 import { AuthContext } from '../../contexts/AuthContext'
 import Spinner from 'react-bootstrap/Spinner'
-
+import Alert from 'react-bootstrap/Alert';
 
 function Alliances({ type }) {
     let [alcs, setAlcs] = useState([])
@@ -33,6 +33,7 @@ function Alliances({ type }) {
                     "id": parsedUser.id
                 }
                 axios.post("/tutor/alliances", data).then((response) => {
+                    setSpinner(false)
                     setAlcs(response.data)
                 }).catch((err) => {
                     console.log("api call err");
@@ -50,7 +51,7 @@ function Alliances({ type }) {
                     "id": parsedUser.id
                 }
                 axios.post("/student/alliances", data).then((res) => {
-                    console.log(res.data);
+                    setSpinner(false)
                     setAlcs(res.data)
                 })
             }
@@ -75,9 +76,8 @@ function Alliances({ type }) {
         if (inv === null) {
             e.preventDefault()
         } else {
-            if (!localStorage.getItem("nova")) {
-                setErr(true)
-
+            if (!user) {
+                setErr(true)    
             }
             let details = {
                 "student": JSON.parse(localStorage.getItem("nova")).id,
@@ -140,7 +140,7 @@ function Alliances({ type }) {
                 <div className="row">
                     <div className="col-xl-12 addoverflow" >
                         <section className="main-content">
-                            <div className="container">
+                            {user || tutor ? <div className="container">
                                 <h1>My Alliances</h1>
                                 <br />
                                 <br />
@@ -229,9 +229,9 @@ function Alliances({ type }) {
 
                                             }
                                         </tbody>
-                                        : < h1 >  No Alliance</h1>}
+                                        : <Alert>You Dont Have Joined In Any Alliances</Alert>}
                                 </table>
-                            </div>
+                            </div> : <Alert variant='danger'>Please Login To View Your Alliances</Alert>}
                         </section>
                     </div>
                 </div>
