@@ -5,6 +5,7 @@ import Spinner from 'react-bootstrap/Spinner'
 import { AuthContext } from '../../contexts/AuthContext'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 import Alert from 'react-bootstrap/Alert';
+import { useHistory } from 'react-router-dom'
 
 function List_Classes({ type, data }) {
 
@@ -16,6 +17,18 @@ function List_Classes({ type, data }) {
 
     let { user } = useContext(AuthContext)
     let { tutor } = useContext(TutuorAuthContext)
+
+    let history = useHistory()
+    let handleClassJoin = (classid) => {
+        console.log(classid);
+        history.push({
+            pathname: `/classes/${classid}`,
+            state: {
+                "id": classid,
+                "type": type
+            }
+        })
+    }
 
     useEffect(() => {
 
@@ -87,7 +100,7 @@ function List_Classes({ type, data }) {
                                         </td>
                                         <td>
                                             <div className='alignadd'>
-                                                <button className="btn2">JOIN</button>
+                                                <button onClick={() => handleClassJoin(obj._id)} className="btn2">JOIN</button>
                                                 {type === "tutor" && <button className="btn2">Delte</button>}
                                             </div>
                                             <div className='iconsetting'>
@@ -120,7 +133,7 @@ function List_Classes({ type, data }) {
                         </tbody>
 
                     </table> : < Alert variant='primary' > You need to be in an alliance</Alert>}
-        </div>
+            </div>
 
         </div >
     )

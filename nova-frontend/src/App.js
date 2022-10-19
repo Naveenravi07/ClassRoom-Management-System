@@ -13,6 +13,7 @@ import CreateAlliancePage from './Pages/Tutors/CreateAlliancePage';
 import AlliancesPage from './Pages/Tutors/AlliancesPage';
 import ViewAlliancePage from './Pages/Tutors/ViewAlliancePage';
 import StudentViewAlliance from './Pages/Students/StudentViewAlliance';
+import ClassPage from './Pages/General/ClassPage'
 
 // Importing contexts
 import { AuthContext } from './contexts/AuthContext';
@@ -23,6 +24,7 @@ function App() {
 
   let { user, setUser } = useContext(AuthContext)
   let { tutor, setTutor } = useContext(TutuorAuthContext)
+
   useEffect(() => {
 
     setUser(localStorage.getItem("nova"))
@@ -34,6 +36,7 @@ function App() {
     <div>
       <BrowserRouter>
         <Route exact path='/'> <GHome /> </Route>
+        <Route  path={`/classes/:id`}> <ClassPage /> </Route>
         {/* Students */}
         <Route exact path='/student'> <Main /> </Route>
         <Route path='/student/signup' > <SignupScreen /> </Route>
@@ -48,7 +51,7 @@ function App() {
         <Route path='/tutor/create-alliance'> <CreateAlliancePage /> </Route>
         <Route path='/tutor/alliances'> <AlliancesPage /> </Route>
         <Route path="/tutor/view-alliance"  > <ViewAlliancePage /> </Route>
-        
+
       </BrowserRouter>
     </div>
   );
