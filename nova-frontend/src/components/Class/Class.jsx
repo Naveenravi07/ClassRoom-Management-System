@@ -8,13 +8,9 @@ import "swiper/css";
 import "swiper/css/scrollbar";
 
 
-
-
 function Class({ details }) {
 
-  if (details.type === "tutor") {
-
-  }
+ 
   let [totalCount, setTotalCount] = useState(13)
   console.log(window.screen.width);
   return (
