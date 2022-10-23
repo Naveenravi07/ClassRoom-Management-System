@@ -1,0 +1,25 @@
+.classnavigators {
+    background: #001524;
+    margin-top: 30px;
+    display: flex;
+}
+
+.navitems {
+    margin: auto;
+    background: #353535;
+    border-radius: 12px;
+}
+
+.navicon {
+    color: white;
+
+}
+
+.addspace {
+    padding-left: 30px;
+    display: inline-block;
+}
+
+.infobtn {
+    margin-right: 30px;
+}

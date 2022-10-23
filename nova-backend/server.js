@@ -2,9 +2,13 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 const app = express();
+const { Server } = require('socket.io')
+let httpServer = require('http').createServer(app,)
+let io = new Server(httpServer, { cors: { origin: "*" } })
+
 const userRoute = require("./routes/student.routes");
 const tutorRoute = require("./routes/tutor.routes")
-let mainRoute = require("./routes/index.routes")
+// let mainRoute = require("./routes/index.routes")
 var db = require("./config/db.config");
 var fileupload = require("express-fileupload");
 
@@ -24,7 +28,22 @@ db.connect((err) => {
 
 app.use('/student', userRoute)
 app.use('/tutor', tutorRoute)
-app.use("/", mainRoute)
+// app.use("/", mainRoute)
+
+const users = {};
+const socketToRoom = {};
+
+io.on('connection', (socket) => {
+    console.log("Connection Established ✔");
+
+    // socket.on("me", (data) => {
+    //     console.log("A new user joined with  id :" + socket.id);
+    // })
+});
+
+app.get('/classes', (req, res) => {
+    console.log("req recived");
+})
 
 const PORT = process.env.PORT || 1080;
-app.listen(PORT, () => console.log(`SERVER RUNNING ON PORT ${PORT}`));
+httpServer.listen(PORT, () => console.log(`SERVER RUNNING ON PORT ${PORT}`));

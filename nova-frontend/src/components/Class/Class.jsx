@@ -1,18 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import './Class.css'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Scrollbar } from "swiper";
-
+import ClassNavigators from './ClassHandleButtons/ClassNavigators';
+import io from 'socket.io-client'
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/scrollbar";
 
 
 function Class({ details }) {
+  //States and Refs
 
- 
-  let [totalCount, setTotalCount] = useState(13)
-  console.log(window.screen.width);
+  const [userSocketid, SetuserSocketId] = useState(null)
+  const socket = io("http://localhost:1080")
+
+  useEffect(() => {
+
+    socket.on('connect', () => {
+      console.log(socket.id);
+      SetuserSocketId(socket.id)
+
+    })
+  }, [])
+
   return (
     <div className='mainwrapper'>
       <div className="classContainer">
@@ -25,7 +36,7 @@ function Class({ details }) {
             <img className='video1' src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
           </div>
         </div>
-
+        < ClassNavigators />
         <div className="othervideos">
 
           <Swiper
@@ -47,57 +58,6 @@ function Class({ details }) {
             }
 
             className="mySwiper">
-
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/sEAyggVL9tw/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            <SwiperSlide className="others swiper-slide">
-              <img className='otvideos' src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
-            </SwiperSlide>
-            
           </Swiper>
 
         </div>

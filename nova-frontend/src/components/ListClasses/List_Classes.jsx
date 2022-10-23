@@ -19,12 +19,13 @@ function List_Classes({ type, data }) {
     let { tutor } = useContext(TutuorAuthContext)
 
     let history = useHistory()
-    let handleClassJoin = (classid) => {
+    let handleClassJoin = (classid,owner) => {
         console.log(classid);
         history.push({
             pathname: `/classes/${classid}`,
             state: {
                 "id": classid,
+                "owner":owner,
                 "type": type
             }
         })
@@ -100,7 +101,7 @@ function List_Classes({ type, data }) {
                                         </td>
                                         <td>
                                             <div className='alignadd'>
-                                                <button onClick={() => handleClassJoin(obj._id)} className="btn2">JOIN</button>
+                                                <button onClick={() => handleClassJoin(obj._id, obj.tutor)} className="btn2">JOIN</button>
                                                 {type === "tutor" && <button className="btn2">Delte</button>}
                                             </div>
                                             <div className='iconsetting'>

@@ -7,7 +7,6 @@ import SNavbar from '../../components/SNavbar/SNavbar'
 function ClassPage() {
 
     let location = useLocation()
-    console.log(location.state);
 
     return (
         <div>

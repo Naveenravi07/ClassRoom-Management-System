@@ -11,7 +11,6 @@ function TNavbar() {
         alt: "manage"
     }
     let history = useHistory()
-    console.log(tutor);
 
     if (tutor == null) {
         boolean = false
