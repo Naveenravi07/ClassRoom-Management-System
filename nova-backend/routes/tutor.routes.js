@@ -91,7 +91,6 @@ router.post("/create-class", (req, res) => {
 })
 
 router.post('/getClasses', (req, res) => {
-    console.log(req.body.id);
     tutorController.getClasses(req.body.id).then((result) => {
         res.send(result)
     })

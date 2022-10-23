@@ -17,10 +17,17 @@ function Class({ details }) {
 
   useEffect(() => {
 
-    socket.on('connect', () => {
-      console.log(socket.id);
+    socket.on('connect', async () => {
+      console.log("user id " + socket.id);
       SetuserSocketId(socket.id)
-
+      let config = {
+        "classid": details.id,
+        "userid": socket.id
+      }
+      socket.emit("join_class", config)
+      socket.on("user_connected",(userid)=>{
+        console.log("NEW USER JUST CONNECTED "+userid);
+      })
     })
   }, [])
 

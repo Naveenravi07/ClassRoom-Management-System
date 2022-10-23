@@ -36,9 +36,11 @@ const socketToRoom = {};
 io.on('connection', (socket) => {
     console.log("Connection Established ✔");
 
-    // socket.on("me", (data) => {
-    //     console.log("A new user joined with  id :" + socket.id);
-    // })
+    socket.on("join_class", (details) => {
+        console.log("Joining Class " + details.classid);
+        socket.join(details.classid)
+        socket.to(details.classid).emit("user_connected",details.userid)
+    })
 });
 
 app.get('/classes', (req, res) => {
