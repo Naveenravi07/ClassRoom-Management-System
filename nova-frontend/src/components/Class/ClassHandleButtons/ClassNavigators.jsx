@@ -1,14 +1,14 @@
 import React from 'react'
 import './ClassNavigators.css'
 
-function ClassNavigators() {
+function ClassNavigators({ handleVideo }) {
     return (
         <div>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
             <div className='classnavigators'>
                 <div className="navitems">
 
-                    <div className='addspace'>
+                    <div className='addspace' onClick={handleVideo}>
                         <span className="material-icons navicon ">
                             videocam
                         </span>
