@@ -2,6 +2,7 @@ let db = require("../config/db.config")
 let collection = require("../config/collections.config")
 let bcrypt = require("bcrypt")
 const mongoose = require('mongoose');
+const { ObjectId } = require("mongodb");
 
 module.exports = {
 
@@ -149,5 +150,46 @@ module.exports = {
             let classes = await db.get().collection(collection.CLASSES).find({ alliance: data.id }).toArray()
             resolve(classes)
         })
+    },
+
+    addStudentDetailsToClass: (data) => {
+        return new Promise(async (resolve, reject) => {
+            let doc = await db.get().collection(collection.CLASSES).updateOne(
+                {
+                    _id: ObjectId(data.classid)
+                },
+                {
+                    $push: {
+                        "students": {
+                            "peerid": data.peerid,
+                            "studentid": data.id
+                        }
+                    }
+                },
+
+            )
+            resolve(data)
+        })
+    },
+
+    remmoveDuplicateStudent: (data) => {
+        return new Promise(async (resolve, reject) => {
+            let check = await db.get().collection(collection.CLASSES).updateOne(
+                {
+                    _id: ObjectId(data.classid)
+                },
+
+                {
+                    $pull: {
+                        "students": {
+                            "studentid": data.id
+                        }
+                    }
+                },
+
+            )
+            resolve(check)
+        })
+
     }
 }

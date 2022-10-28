@@ -34,12 +34,15 @@ const users = {};
 const socketToRoom = {};
 
 io.on('connection', (socket) => {
-    console.log("Connection Established ✔");
 
     socket.on("join_class", (details) => {
         console.log("Joining Class " + details.classid);
         socket.join(details.classid)
         socket.to(details.classid).emit("user_connected",details.userid)
+    })
+
+    socket.on("classStreamData",(id)=>{
+        console.log("Stream Recived in server on PEer "+id );
     })
 });
 

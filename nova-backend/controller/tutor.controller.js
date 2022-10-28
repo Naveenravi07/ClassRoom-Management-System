@@ -136,5 +136,26 @@ module.exports = {
             let alcs = await db.get().collection(collections.CLASSES).find({ alliance: id }).toArray()
             resolve(alcs)
         })
+    },
+
+    addPeerid: (classid, peerid) => {
+        console.log("peerid adding to doc" + peerid);
+        return new Promise(async (resolve, reject) => {
+            let doc = await db.get().collection(collections.CLASSES).updateOne({
+                _id: ObjectId(classid)
+            }, {
+                $set: {
+                    "peerid": peerid
+                }
+            })
+            resolve(doc)
+        })
+    },
+    getClassInfo: (data) => {
+        let classid = data.id
+        return new Promise(async (resolve, reject) => {
+            let doc = db.get().collection(collections.CLASSES).findOne({ _id: ObjectId(classid) })
+            resolve(doc)
+        })
     }
 }

@@ -96,4 +96,16 @@ router.post('/getClasses', (req, res) => {
     })
 })
 
+router.post('/addPeerID', (req, res) => {
+    tutorController.addPeerid(req.body.classid, req.body.peerid).then((response) => {
+        res.send(response)
+    })
+})
+
+router.post('/getClassInfo', (req, res) => {
+    tutorController.getClassInfo(req.body).then((response) => {
+        res.send(response)
+    })
+})
+
 module.exports = router

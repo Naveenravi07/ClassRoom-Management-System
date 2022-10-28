@@ -11,97 +11,110 @@ import { AuthContext } from '../../contexts/AuthContext';
 import Spinner from 'react-bootstrap/Spinner'
 import "swiper/css";
 import "swiper/css/scrollbar";
+import axios from '../../axios/config'
 
 function Class({ details }) {
+  // const [peerId, setPeerId] = useState('');
+  // const [remotePeerIdValue, setRemotePeerIdValue] = useState('');
+  // const remoteVideoRef = useRef(null);
+  // const currentUserVideoRef = useRef(null);
+  // const peerInstance = useRef(null);
 
-  let { tutor } = useContext(TutuorAuthContext)
-  let { user, setUser } = useContext(AuthContext)
-
-  //States and Refs
-
-  let [spinner, setSpinner] = useState(false)
-  const [userSocketid, SetuserSocketId] = useState(null)
-  let [Streaming, setStream] = useState()
-  let [student, setStudent] = useState([])
-  let [teachers, setTeachers] = useState([])
-  let [streamer, setStreamer] = useState({})
-
-  const socket = io("http://localhost:1080")
+  const [peerId, setPeerId] = useState('');
+  const [remotePeerIdValue, setRemotePeerIdValue] = useState('');
+  const remoteVideoRef = useRef(null);
+  const currentUserVideoRef = useRef(null);
+  const peerInstance = useRef(null);
+  let [streamTecher, setStreamTeacher] = useState(null)
+  let [allstudents, setAllStudents] = useState([])
 
   let config = {
     "classid": details.id,
-    "userid": socket.id
   }
-  let currentTutor = {}
-
-
   useEffect(() => {
-    if (!tutor) {
-      setSpinner(true)
-    } else {
-      currentTutor = JSON.parse(tutor)
-      setSpinner(false)
-    }
-    socket.on('connect', async () => {
-      console.log("user id " + socket.id);
-      SetuserSocketId(socket.id)
 
-      socket.emit("join_class", config)
-      socket.on("user_connected", (userid) => {
-        console.log("NEW USER JUST CONNECTED " + userid);
-      })
+    const peer = new Peer();
+
+    axios.post("/tutor/getClassInfo", { "id": config.classid }).then((res) => {
+      let caller = res.data.peerid
+      setStreamTeacher(caller)
+      setAllStudents(res.data.students)
     })
-  }, [tutor, user])
 
-
-  let streamClass = async () => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((cam) => {
-      setStream(cam)
-    })
-    console.log("Streaming");
-
-    let myPeer = new Peer()
-
-    myPeer.on('open', (id) => {
-      if (tutor && user) {
-        console.log(user);
-        window.alert(`You are about to logout from your student account ${JSON.parse(user).name}`)
-        setUser(null)
-        localStorage.removeItem("nova")
-      } else {
-        if (JSON.parse(user)) {
-          return setStudent(id)
-
-        } else {
-
-          if (config.userid === currentTutor.id) {
-            window.alert(id)
-            setStreamer({
-              "novaid": config.userid,
-              "peerid": id,
-            })
-          } else {
-            setTeachers(id)
-          }
+    peer.on('open', (id) => {
+      console.log("your peer id is" + id);
+      setPeerId(id)
+      if (details.type === "tutor") {
+        let data = {
+          "peerid": id,
+          "classid": config.classid
         }
-      }
 
+        axios.post('/tutor/addPeerID', data).then((response) => {
+          console.log("SAVING YOUR PEERID TO DB");
+          console.log(response);
+        })
+      } else {
+
+        let data = {
+          "id": JSON.parse(localStorage.getItem("nova")).id,
+          "peerid": id,
+          "classid": config.classid
+        }
+
+        axios.post('/student/addStudenttoClass', data).then((response) => {
+          console.log(response);
+
+        })
+      }
+    });
+
+    peer.on('call', (call) => {
+      
+      call.answer()
+      call.on('stream', function (remoteStream) {
+        remoteVideoRef.current.srcObject = remoteStream
+        remoteVideoRef.current.play();
+      });
     })
+
+    peerInstance.current = peer;
+
+
+  }, [])
+
+
+  const call = (remotePeerId) => {
+    if (details.type === "tutor") {
+      var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+      getUserMedia({ video: true, audio: true }, (mediaStream) => {
+
+        currentUserVideoRef.current.srcObject = mediaStream;
+        currentUserVideoRef.current.play();
+        const call = peerInstance.current.call(remotePeerId, mediaStream)
+
+        call.on('stream', (remoteStream) => {
+          remoteVideoRef.current.srcObject = remoteStream
+          remoteVideoRef.current.play();
+        });
+      });
+    }
   }
+
 
   return (
     <div className='mainwrapper'>
-      {spinner && <Spinner animation="border" variant="danger" className='load' role="status" size='lg' />}
       <div className="classContainer">
         <div className="textArea">
           <p>Sharan is presenting</p>
         </div>
         <div className="mainvideoContainer">
           <div className="mainvideo">
-            <img className='video1' src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
+            <video className='video1' ref={details.type === "tutor" ? currentUserVideoRef : remoteVideoRef ? remoteVideoRef : ""} src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
           </div>
         </div>
-        < ClassNavigators handleVideo={streamClass} />
+        < ClassNavigators handleVideo={() => call(allstudents[0].peerid)} />
         <div className="othervideos">
 
           <Swiper
@@ -123,6 +136,9 @@ function Class({ details }) {
             }
 
             className="mySwiper">
+            <SwiperSlide className="others swiper-slide">
+
+            </SwiperSlide>
           </Swiper>
 
         </div>

@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controller/user.controller");
-let db = require("../config/db.config")
+let db = require("../config/db.config");
+const { response } = require("express");
 
 router.get('/test', (req, res) => {
     console.log("got req from frontend");
@@ -65,6 +66,16 @@ router.post('/getClasses', (req, res) => {
     } catch (err) {
         res.status(500).send("Internal server error")
     }
+
+})
+
+router.post('/addStudenttoClass', (req, res) => {
+    userController.remmoveDuplicateStudent(req.body).then((respo) => {
+        userController.addStudentDetailsToClass(req.body).then((response) => {
+            console.log(response);
+            res.send(response)
+        })
+    })
 
 })
 
