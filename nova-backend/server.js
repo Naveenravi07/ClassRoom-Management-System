@@ -33,16 +33,28 @@ app.use('/tutor', tutorRoute)
 const users = {};
 const socketToRoom = {};
 
-io.on('connection', (socket) => {
+io.on('connection',async (socket) => {
 
     socket.on("join_class", (details) => {
         console.log("Joining Class " + details.classid);
         socket.join(details.classid)
-        socket.to(details.classid).emit("user_connected",details.userid)
+        socket.to(details.classid).emit("user_connected", details.userid)
     })
 
-    socket.on("classStreamData",(id)=>{
-        console.log("Stream Recived in server on PEer "+id );
+    socket.on("classStreamData", (id) => {
+        console.log("Stream Recived in server on PEer " + id);
+    })
+
+    socket.on("newStudent", (data) => {
+        console.log(data);
+        console.log("new Student on waiting list " + data.name);
+        socket.join(data.id)
+        socket.broadcast.emit('descionPending', data)
+        // socket.broadcast.to(data.id).emit('descionPending', data); 
+        // socket.nsp.in(data.id).emit("descionPending",data)
+        // socket.broadcast.to(data.id).emit("descionPending",data)
+        // socket.in(data.id).emit("descionPending",data)
+
     })
 });
 

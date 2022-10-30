@@ -72,7 +72,6 @@ router.post('/getClasses', (req, res) => {
 router.post('/addStudenttoClass', (req, res) => {
     userController.remmoveDuplicateStudent(req.body).then((respo) => {
         userController.addStudentDetailsToClass(req.body).then((response) => {
-            console.log(response);
             res.send(response)
         })
     })
