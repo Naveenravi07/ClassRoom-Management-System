@@ -50,11 +50,7 @@ io.on('connection',async (socket) => {
         console.log("new Student on waiting list " + data.name);
         socket.join(data.id)
         socket.broadcast.emit('descionPending', data)
-        // socket.broadcast.to(data.id).emit('descionPending', data); 
-        // socket.nsp.in(data.id).emit("descionPending",data)
-        // socket.broadcast.to(data.id).emit("descionPending",data)
-        // socket.in(data.id).emit("descionPending",data)
-
+        socket.emit("showAllusers",io.sockets.sockets)
     })
 });
 

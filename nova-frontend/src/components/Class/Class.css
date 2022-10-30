@@ -28,7 +28,7 @@ p {
     display: flex;
     max-width: 100%;
     max-height: 100%;
-
+    min-height: 60vh;
 }
 
 .video1 {
@@ -68,7 +68,9 @@ p {
 .infobtn {
     margin-right: 30px;
 }
-.redstrike{
+
+.redstrike {
     color: red;
 }
+
 @media only screen and(max-width) {}

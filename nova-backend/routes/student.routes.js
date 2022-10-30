@@ -78,5 +78,12 @@ router.post('/addStudenttoClass', (req, res) => {
 
 })
 
+router.post('/removeStudentFromClass',(req,res)=>{
+    console.log(req.body);
+    userController.remmoveDuplicateStudent({"classid":req.body.classid,"id":req.body.sid}).then((response)=>{
+        res.send(response)
+    })
+})
+
 
 module.exports = router;

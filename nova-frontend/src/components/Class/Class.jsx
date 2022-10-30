@@ -15,7 +15,7 @@ function Class({ details }) {
   const [peerId, setPeerId] = useState('');
   const remoteVideoRef = useRef(null);
   const currentUserVideoRef = useRef(null);
-
+  let [classDetails, setClassDetails] = useState(null)
   const peerInstance = useRef(null);
 
   let config = {
@@ -29,6 +29,7 @@ function Class({ details }) {
   useEffect(() => {
     const peer = new Peer();
     axios.post("/tutor/getClassInfo", { "id": config.classid }).then((res) => {
+      setClassDetails(res.data)
       REALOWNER = res.data.tutor
     })
 
@@ -99,6 +100,14 @@ function Class({ details }) {
 
     return (() => {
       socket.close()
+      if(details.type==="student"){
+        let sid=JSON.parse(localStorage.getItem("nova")).id
+        let data={
+          "sid":sid,
+          "classid":details.id
+        }
+        axios.post('/student/removeStudentFromClass',data)
+      }
     })
 
   }, [])
@@ -127,7 +136,7 @@ function Class({ details }) {
     <div className='mainwrapper'>
       <div className="classContainer">
         <div className="textArea">
-          <p>Sharan is presenting</p>
+        { classDetails && <p> {classDetails.tutorname} Is Presenting </p>}
         </div>
         <div className="mainvideoContainer">
           <div className="mainvideo">
