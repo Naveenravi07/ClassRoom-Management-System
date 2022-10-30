@@ -157,5 +157,27 @@ module.exports = {
             let doc = db.get().collection(collections.CLASSES).findOne({ _id: ObjectId(classid) })
             resolve(doc)
         })
+    },
+
+    ReomovePeerId: (data) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection(collections.CLASSES).updateOne(
+                {
+                    _id: ObjectId(data.id)
+                },
+
+                {
+                    $unset: {
+                        "peerid": 1,
+
+                    }
+                },
+                {
+                    multi: true
+                }
+
+            )
+            resolve()
+        })
     }
 }

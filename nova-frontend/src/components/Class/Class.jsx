@@ -58,7 +58,8 @@ function Class({ details }) {
     peer.on('open', (id) => {
 
       setPeerId(id)
-      if (details.type === "tutor") {
+      if (details.owner === REALOWNER) {
+        console.log("u r owner");
         let data = {
           "peerid": id,
           "classid": config.classid
@@ -107,6 +108,8 @@ function Class({ details }) {
           "classid":details.id
         }
         axios.post('/student/removeStudentFromClass',data)
+      }else{
+        axios.post('/tutor/removeTutorPeerid',{"id":details.id})
       }
     })
 

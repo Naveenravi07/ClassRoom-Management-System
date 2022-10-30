@@ -19,13 +19,13 @@ function List_Classes({ type, data }) {
     let { tutor } = useContext(TutuorAuthContext)
 
     let history = useHistory()
-    let handleClassJoin = (classid,owner) => {
+    let handleClassJoin = (classid, owner) => {
         console.log(classid);
         history.push({
             pathname: `/classes/${classid}`,
             state: {
                 "id": classid,
-                "owner":owner,
+                "owner": owner,
                 "type": type
             }
         })
@@ -44,6 +44,7 @@ function List_Classes({ type, data }) {
         } else if (type === "student") {
             console.log(data);
             axios.post('/student/getClasses', data).then((res) => {
+                console.log(res.data);
                 setClasses(res.data)
                 setLoading(false)
             }).catch((Err) => {
@@ -100,10 +101,16 @@ function List_Classes({ type, data }) {
                                             {obj.timeString}
                                         </td>
                                         <td>
-                                            <div className='alignadd'>
-                                                <button onClick={() => handleClassJoin(obj._id, obj.tutor)} className="btn2">JOIN</button>
-                                                {type === "tutor" && <button className="btn2">Delte</button>}
-                                            </div>
+                                            {type === "student" ? <div className='alignadd'>
+                                                {obj.peerid && <button onClick={() => handleClassJoin(obj._id, obj.tutor)} className="btn2">JOIN</button>}
+
+                                            </div> :
+                                                <div className='alignadd'>
+                                                    <button onClick={() => handleClassJoin(obj._id, obj.tutor)} className="btn2">JOIN</button>
+                                             
+                                                </div>
+
+                                            }
                                             <div className='iconsetting'>
                                                 <span class="material-symbols-outlined">
                                                     videocam

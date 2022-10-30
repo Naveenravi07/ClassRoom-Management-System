@@ -108,4 +108,9 @@ router.post('/getClassInfo', (req, res) => {
     })
 })
 
+router.post('/removeTutorPeerid',(req,res)=>{
+    console.log("removing peerid");
+    tutorController.ReomovePeerId(req.body)
+})
+
 module.exports = router

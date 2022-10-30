@@ -80,6 +80,7 @@ router.post('/addStudenttoClass', (req, res) => {
 
 router.post('/removeStudentFromClass',(req,res)=>{
     console.log(req.body);
+    // Remove Duplicate Student Can Do Our Purpose Here  No Need To Create New Function
     userController.remmoveDuplicateStudent({"classid":req.body.classid,"id":req.body.sid}).then((response)=>{
         res.send(response)
     })

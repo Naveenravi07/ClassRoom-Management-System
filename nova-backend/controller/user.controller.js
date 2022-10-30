@@ -192,20 +192,5 @@ module.exports = {
         })
 
     },
-    // removeStudent: (data) => {
-    //     return new Promise(async (resolve, reject) => {
-    //         await db.get().collection(collection.CLASSES).updateOne(
-    //             {
-    //                 _id: ObjectId(data.classid)
-    //             },
-    //             {
-    //                 $pull: {
-    //                     "students": {
-
-    //                     }
-    //                 }
-    //             }
-    //         )
-    //     })
-    // }
+   
 }
