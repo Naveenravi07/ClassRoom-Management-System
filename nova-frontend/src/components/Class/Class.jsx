@@ -41,13 +41,11 @@ function Class({ details }) {
 
         if (details.owner === JSON.parse(localStorage.getItem("tutor")).id) {
           socket.on('descionPending', (data) => {
-            console.log(data);
             if (data.classid === details.id) {
               let msg = window.confirm(`${data.name} Is Waiting To Join The Call`)
               if (msg === true) {
                 call(data.peerid)
               } else {
-                console.log("call cancelLED");
                 socket.emit("calldeclined", { "classid": config.classid, "sid": data.id })
               }
             }
@@ -56,11 +54,8 @@ function Class({ details }) {
         }
 
       } else {
-
-        console.log("connected");
         socket.on("calldecline", (data) => {
           if (config.classid === data.classid) {
-            console.log(data.msg);
             setdeclinedMsgModal(true)
           }
         })
@@ -72,18 +67,20 @@ function Class({ details }) {
     peer.on('open', (id) => {
 
       setPeerId(id)
-      if (details.owner === REALOWNER) {
-        console.log("u r owner");
-        let data = {
-          "peerid": id,
-          "classid": config.classid
+      console.log(details);
+      if (details.type === "tutor") {
+        if (JSON.parse(localStorage.getItem("tutor").id) === REALOWNER) {
+          console.log("u r owner");
+          let data = {
+            "peerid": id,
+            "classid": config.classid
+          }
+
+          axios.post('/tutor/addPeerID', data).then((response) => {
+          })
         }
-
-        axios.post('/tutor/addPeerID', data).then((response) => {
-          console.log(response);
-        })
-
-      } else {
+      }
+      else {
 
         let data = {
           "id": JSON.parse(localStorage.getItem("nova")).id,
@@ -123,9 +120,7 @@ function Class({ details }) {
           "sid": sid,
           "classid": details.id
         }
-        axios.post('/student/removeStudentFromClass',data)
-      }else{
-        axios.post('/tutor/removeTutorPeerid',{"id":details.id})
+        axios.post('/student/removeStudentFromClass', data)
       }
     })
 

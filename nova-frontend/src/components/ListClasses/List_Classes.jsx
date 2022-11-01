@@ -101,16 +101,10 @@ function List_Classes({ type, data }) {
                                             {obj.timeString}
                                         </td>
                                         <td>
-                                            {type === "student" ? <div className='alignadd'>
-                                                {obj.peerid && <button onClick={() => handleClassJoin(obj._id, obj.tutor)} className="btn2">JOIN</button>}
+                                            <div className='alignadd'>
+                                                <button onClick={() => handleClassJoin(obj._id, obj.tutor)} className="btn2">JOIN</button>  </div>
 
-                                            </div> :
-                                                <div className='alignadd'>
-                                                    <button onClick={() => handleClassJoin(obj._id, obj.tutor)} className="btn2">JOIN</button>
-                                             
-                                                </div>
 
-                                            }
                                             <div className='iconsetting'>
                                                 <span class="material-symbols-outlined">
                                                     videocam
