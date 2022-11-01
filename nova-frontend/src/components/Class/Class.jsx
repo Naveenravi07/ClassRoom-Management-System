@@ -8,15 +8,18 @@ import { Peer } from 'peerjs'
 import "swiper/css";
 import "swiper/css/scrollbar";
 import axios from '../../axios/config'
-import Spinner from 'react-bootstrap/Spinner'
+import CenterdModal from '../CenterdModal/CenterdModal';
+import { useHistory } from 'react-router-dom'
 
 function Class({ details }) {
-
+  const HISTORY = useHistory()
   const [peerId, setPeerId] = useState('');
   const remoteVideoRef = useRef(null);
   const currentUserVideoRef = useRef(null);
   let [classDetails, setClassDetails] = useState(null)
   const peerInstance = useRef(null);
+  const [modalShow, setModalShow] = useState(false);
+  const [declinedMsgModal, setdeclinedMsgModal] = useState(false)
 
   let config = {
     "classid": details.id,
@@ -38,18 +41,29 @@ function Class({ details }) {
 
         if (details.owner === JSON.parse(localStorage.getItem("tutor")).id) {
           socket.on('descionPending', (data) => {
-            console.log(details);
+            console.log(data);
             if (data.classid === details.id) {
               let msg = window.confirm(`${data.name} Is Waiting To Join The Call`)
-              if (msg == true) {
+              if (msg === true) {
                 call(data.peerid)
               } else {
                 console.log("call cancelLED");
+                socket.emit("calldeclined", { "classid": config.classid, "sid": data.id })
               }
             }
 
           })
         }
+
+      } else {
+
+        console.log("connected");
+        socket.on("calldecline", (data) => {
+          if (config.classid === data.classid) {
+            console.log(data.msg);
+            setdeclinedMsgModal(true)
+          }
+        })
 
       }
     })
@@ -79,17 +93,19 @@ function Class({ details }) {
         }
 
         axios.post('/student/addStudenttoClass', data).then((response) => {
-
           // Emiting event to websocket
           socket.emit('newStudent', data)
+          setModalShow(true)
 
         })
       }
     });
 
+    // Client Side or Student Side
     peer.on('call', (call) => {
 
       call.answer()
+      setModalShow(false)
       call.on('stream', function (remoteStream) {
         remoteVideoRef.current.srcObject = remoteStream
         remoteVideoRef.current.play();
@@ -100,13 +116,13 @@ function Class({ details }) {
 
     return (() => {
       socket.close()
-      if(details.type==="student"){
-        let sid=JSON.parse(localStorage.getItem("nova")).id
-        let data={
-          "sid":sid,
-          "classid":details.id
+      if (details.type === "student") {
+        let sid = JSON.parse(localStorage.getItem("nova")).id
+        let data = {
+          "sid": sid,
+          "classid": details.id
         }
-        axios.post('/student/removeStudentFromClass',data)
+        axios.post('/student/removeStudentFromClass', data)
       }
     })
 
@@ -121,8 +137,9 @@ function Class({ details }) {
 
         currentUserVideoRef.current.srcObject = mediaStream;
         currentUserVideoRef.current.play();
-        const call = peerInstance.current.call(remotePeerId, mediaStream)
+        const call = peerInstance.current.call(remotePeerId, mediaStream) //Calling the student
 
+        // The Teacher getting Stream Of Students But Right Now StudentVideo Streaming Is Disabled
         call.on('stream', (remoteStream) => {
           remoteVideoRef.current.srcObject = remoteStream
           remoteVideoRef.current.play();
@@ -134,9 +151,34 @@ function Class({ details }) {
 
   return (
     <div className='mainwrapper'>
+      {
+        modalShow && <CenterdModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          title="You are about there"
+          heading={`Please Wait `}
+          body="Please Wait Until Your Call Is Accepted By The Host "
+          showloader="true"
+        />
+      }
+
+      {
+        declinedMsgModal && <CenterdModal
+          show={modalShow}
+          onHide={() => {
+            setModalShow(false)
+            HISTORY.push('/student/alliances')
+          }}
+          btnname="Go Back To Class Menu"
+          title="Oh No "
+          heading={`Your Request Was Rejected By The Host`}
+          body="Oh No Your Request To Join The Meeting Was Denied By The Meeting Host  "
+          showloader={false}
+        />
+      }
       <div className="classContainer">
         <div className="textArea">
-        { classDetails && <p> {classDetails.tutorname} Is Presenting </p>}
+          {classDetails && <p> {classDetails.tutorname} Is Presenting </p>}
         </div>
         <div className="mainvideoContainer">
           <div className="mainvideo">

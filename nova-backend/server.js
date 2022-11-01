@@ -33,7 +33,7 @@ app.use('/tutor', tutorRoute)
 const users = {};
 const socketToRoom = {};
 
-io.on('connection',async (socket) => {
+io.on('connection', async (socket) => {
 
     socket.on("join_class", (details) => {
         console.log("Joining Class " + details.classid);
@@ -46,11 +46,15 @@ io.on('connection',async (socket) => {
     })
 
     socket.on("newStudent", (data) => {
-        console.log(data);
+        // data={"id":classid, "peeerid":peer id of the student, "classid":classid, name:"name of student ", owner:owner of the meeting}
         console.log("new Student on waiting list " + data.name);
         socket.join(data.id)
         socket.broadcast.emit('descionPending', data)
-        socket.emit("showAllusers",io.sockets.sockets)
+    })
+
+    socket.on("calldeclined", (data) => {
+        socket.join(data.classid)
+        socket.broadcast.emit("calldecline", { "msg": `Your Call Has Been Declined By The Host`, "classid": data.classid })
     })
 });
 
