@@ -8,7 +8,7 @@ import { Peer } from 'peerjs'
 import "swiper/css";
 import "swiper/css/scrollbar";
 import axios from '../../axios/config'
-import CenterdModal from '../CenterdModal/CenterdModal';
+import CenterdModal from '../UI/CenterdModal/CenterdModal';
 import { useHistory } from 'react-router-dom'
 
 function Class({ details }) {

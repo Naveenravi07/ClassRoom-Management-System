@@ -3,7 +3,7 @@ import axios from '../../axios/config'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 import { useHistory } from 'react-router-dom'
 import './Create_Class.css'
-import Modal from '../Modal/Modal'
+import Modal from '../UI/Modal/Modal'
 import List_Classes from '../ListClasses/List_Classes'
 
 function Create_Class({ id }) {

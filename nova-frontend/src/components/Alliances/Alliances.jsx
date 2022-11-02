@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState, useContext } from 'react'
 import './Alliances.css'
 import { useHistory } from 'react-router-dom'
 import axios from "../../axios/config"
-import Modal from '../Modal/Modal'
+import Modal from '../UI/Modal/Modal'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 import { AuthContext } from '../../contexts/AuthContext'
 import Spinner from 'react-bootstrap/Spinner'
