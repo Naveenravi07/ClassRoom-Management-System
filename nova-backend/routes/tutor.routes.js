@@ -97,6 +97,7 @@ router.post('/getClasses', (req, res) => {
 })
 
 router.post('/addPeerID', (req, res) => {
+    console.log("adding tutor peer id to db");
     tutorController.addPeerid(req.body.classid, req.body.peerid).then((response) => {
         res.send(response)
     })

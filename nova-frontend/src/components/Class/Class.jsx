@@ -69,7 +69,7 @@ function Class({ details }) {
       setPeerId(id)
       console.log(details);
       if (details.type === "tutor") {
-        if (JSON.parse(localStorage.getItem("tutor").id) === REALOWNER) {
+        if (JSON.parse(localStorage.getItem("tutor")).id === REALOWNER) {
           console.log("u r owner");
           let data = {
             "peerid": id,
@@ -104,6 +104,7 @@ function Class({ details }) {
 
       call.answer()
       setModalShow(false)
+      setdeclinedMsgModal(false)
       call.on('stream', function (remoteStream) {
         remoteVideoRef.current.srcObject = remoteStream
         remoteVideoRef.current.play();
@@ -121,6 +122,8 @@ function Class({ details }) {
           "classid": details.id
         }
         axios.post('/student/removeStudentFromClass', data)
+      } else {
+        axios.post('/tutor/removeTutorPeerid',{"id":config.classid})
       }
     })
 
@@ -162,9 +165,9 @@ function Class({ details }) {
 
       {
         declinedMsgModal && <CenterdModal
-          show={modalShow}
+          show={declinedMsgModal}
           onHide={() => {
-            setModalShow(false)
+            setdeclinedMsgModal(false)
             HISTORY.push('/student/alliances')
           }}
           btnname="Go Back To Class Menu"
