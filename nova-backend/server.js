@@ -36,16 +36,6 @@ const socketToRoom = {};
 
 io.on('connection', async (socket) => {
 
-    socket.on("join_class", (details) => {
-        console.log("Joining Class " + details.classid);
-        socket.join(details.classid)
-        socket.to(details.classid).emit("user_connected", details.userid)
-    })
-
-    socket.on("classStreamData", (id) => {
-        console.log("Stream Recived in server on PEer " + id);
-    })
-
     socket.on("newStudent", (data) => {
         // data={"id":classid, "peeerid":peer id of the student, "classid":classid, name:"name of student ", owner:owner of the meeting}
         console.log("new Student on waiting list " + data.name);

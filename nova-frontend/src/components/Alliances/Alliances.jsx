@@ -160,6 +160,7 @@ function Alliances({ type }) {
                                     </thead>
 
                                     {spinner && <Spinner animation="border" variant="danger" className='load' role="status" size='lg' />}
+                                {  user ?  <Fragment className='row'>
                                     {alcs.length > 0 ?
                                         <tbody>
                                             {
@@ -230,6 +231,7 @@ function Alliances({ type }) {
                                             }
                                         </tbody>
                                         : <Alert>You Dont Have Joined In Any Alliances</Alert>}
+                                        </Fragment> : <Alert>You Dont Have An Account Please Login First</Alert>}
                                 </table>
                             </div> : <Alert variant='danger'>Please Login To View Your Alliances</Alert>}
                         </section>
