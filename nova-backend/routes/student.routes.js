@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require("../controller/user.controller");
 let db = require("../config/db.config");
 const { response } = require("express");
+const tutorController = require("../controller/tutor.controller");
 
 router.get('/test', (req, res) => {
     console.log("got req from frontend");
@@ -83,6 +84,12 @@ router.post('/removeStudentFromClass',(req,res)=>{
     // Remove Duplicate Student Can Do Our Purpose Here  No Need To Create New Function
     userController.remmoveDuplicateStudent({"classid":req.body.classid,"id":req.body.sid}).then((response)=>{
         res.send(response)
+    })
+})
+
+router.post('/getAttendence',(req,res)=>{
+    tutorController.getClassInfo({"id":req.body.id}).then((respo)=>{
+        res.send(respo)
     })
 })
 

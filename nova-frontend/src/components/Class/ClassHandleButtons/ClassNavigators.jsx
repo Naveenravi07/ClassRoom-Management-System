@@ -1,7 +1,8 @@
 import React from 'react'
 import './ClassNavigators.css'
 
-function ClassNavigators() {
+function ClassNavigators({ group_modal, setgroup_modal }) {
+   
     return (
         <div>
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -20,9 +21,15 @@ function ClassNavigators() {
                         </span>
                     </div>
 
-                    <div className='addspace infobtn'>
+                    <div className='addspace '>
                         <span class="material-icons navicon">
                             info
+                        </span>
+                    </div>
+
+                    <div className='addspace infobtn'>
+                        <span class="material-icons navicon" onClick={()=>setgroup_modal(!group_modal)} >
+                            groups
                         </span>
                     </div>
 

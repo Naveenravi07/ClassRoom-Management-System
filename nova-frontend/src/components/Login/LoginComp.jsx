@@ -30,6 +30,7 @@ function LoginComp({ type }) {
   let [email, setEmail] = useState('')
   let [err, setErr] = useState(null)
   let handleSubmit = (e) => {
+    console.log("click");
     e.preventDefault()
 
     let data = {
@@ -72,7 +73,7 @@ function LoginComp({ type }) {
               <img src={require("../../assets/images/img-01.png")} alt="IMG" />
             </div>
 
-            <form className="login100-form validate-form" action="/students/login" method="post">
+            <form className="login100-form validate-form" >
 
               <span className="login100-form-title">
                 {type === "student" ? "Student" : "Tutor"} Login

@@ -20,6 +20,7 @@ p {
     margin-top: 30px;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
+    max-width: 100%;
 }
 
 .mainvideo {
@@ -34,6 +35,8 @@ p {
 .video1 {
     max-height: 700px;
     margin: auto;
+    max-width: 100%;
+    width: 1000px;
 }
 
 .otvideos {
@@ -73,4 +76,8 @@ p {
     color: red;
 }
 
-@media only screen and(max-width) {}
+@media only screen and (max-device-width: 480px){
+    .video1{
+        max-height: 900px;
+    }
+}

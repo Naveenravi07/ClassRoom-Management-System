@@ -2,12 +2,14 @@
     background: #001524;
     margin-top: 30px;
     display: flex;
+    height: 50px;
 }
 
 .navitems {
     margin: auto;
     background: #353535;
     border-radius: 12px;
+    flex-direction: row;
 }
 
 .navicon {

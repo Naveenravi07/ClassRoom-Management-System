@@ -11,7 +11,8 @@ const tutorRoute = require("./routes/tutor.routes")
 // let mainRoute = require("./routes/index.routes")
 var db = require("./config/db.config");
 var fileupload = require("express-fileupload");
-
+const studentCOntroller = require("./controller/user.controller");
+const tutorController = require("./controller/tutor.controller");
 
 // middleware
 app.use(express.json());
@@ -49,12 +50,14 @@ io.on('connection', async (socket) => {
         // data={"id":classid, "peeerid":peer id of the student, "classid":classid, name:"name of student ", owner:owner of the meeting}
         console.log("new Student on waiting list " + data.name);
         socket.join(data.id)
-        socket.broadcast.emit('descionPending', data)
+        socket.broadcast.emit('descionPending', { data})
     })
 
     socket.on("calldeclined", (data) => {
-        socket.join(data.classid)
-        socket.broadcast.emit("calldecline", { "msg": `Your Call Has Been Declined By The Host`, "classid": data.classid })
+        studentCOntroller.remmoveDuplicateStudent({ "id": data.sid, "classid": data.classid }).then((response) => {
+            socket.join(data.classid)
+            socket.broadcast.emit("calldecline", { "msg": `Your Call Has Been Declined By The Host`, "classid": data.classid })
+        })
     })
 });
 

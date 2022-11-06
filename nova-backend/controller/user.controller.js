@@ -162,7 +162,8 @@ module.exports = {
                     $push: {
                         "students": {
                             "peerid": data.peerid,
-                            "studentid": data.id
+                            "studentid": data.id,
+                            "s_name":data.name
                         }
                     }
                 },

@@ -10,6 +10,7 @@ import "swiper/css/scrollbar";
 import axios from '../../axios/config'
 import CenterdModal from '../UI/CenterdModal/CenterdModal';
 import { useHistory } from 'react-router-dom'
+import Table from '../UI/Table/Table';
 
 function Class({ details }) {
   const HISTORY = useHistory()
@@ -20,7 +21,8 @@ function Class({ details }) {
   const peerInstance = useRef(null);
   const [modalShow, setModalShow] = useState(false);
   const [declinedMsgModal, setdeclinedMsgModal] = useState(false)
-
+  const [grp_modal, setgrp_modal] = useState(false)
+  let [students, setStudents] = useState([])
   let config = {
     "classid": details.id,
   }
@@ -33,6 +35,7 @@ function Class({ details }) {
     const peer = new Peer();
     axios.post("/tutor/getClassInfo", { "id": config.classid }).then((res) => {
       setClassDetails(res.data)
+      console.log(res.data);
       REALOWNER = res.data.tutor
     })
 
@@ -40,7 +43,7 @@ function Class({ details }) {
       if (details.type === "tutor") {
 
         if (details.owner === JSON.parse(localStorage.getItem("tutor")).id) {
-          socket.on('descionPending', (data) => {
+          socket.on('descionPending', ({ data }) => {
             if (data.classid === details.id) {
               let msg = window.confirm(`${data.name} Is Waiting To Join The Call`)
               if (msg === true) {
@@ -89,7 +92,6 @@ function Class({ details }) {
           "name": JSON.parse(localStorage.getItem("nova")).name,
           "owner": REALOWNER,
         }
-
         axios.post('/student/addStudenttoClass', data).then((response) => {
           // Emiting event to websocket
           socket.emit('newStudent', data)
@@ -123,7 +125,7 @@ function Class({ details }) {
         }
         axios.post('/student/removeStudentFromClass', data)
       } else {
-        axios.post('/tutor/removeTutorPeerid',{"id":config.classid})
+        axios.post('/tutor/removeTutorPeerid', { "id": config.classid })
       }
     })
 
@@ -134,7 +136,7 @@ function Class({ details }) {
     if (details.type === "tutor") {
       var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-      getUserMedia({ video: true, audio: true }, (mediaStream) => {
+      getUserMedia({ video: true, audio: false }, (mediaStream) => {
 
         currentUserVideoRef.current.srcObject = mediaStream;
         currentUserVideoRef.current.play();
@@ -147,6 +149,14 @@ function Class({ details }) {
         });
       });
     }
+  }
+
+  const handle_grpChange = (newval) => {
+    setgrp_modal(newval)
+    axios.post('/student/getAttendence',{"id":config.classid}).then((students)=>{
+      console.log(students);
+      setStudents(students.data.students)
+    })
   }
 
 
@@ -177,16 +187,19 @@ function Class({ details }) {
           showloader={false}
         />
       }
+      {
+        grp_modal && <Table data={students} />
+      }
       <div className="classContainer">
         <div className="textArea">
           {classDetails && <p> {classDetails.tutorname} Is Presenting </p>}
         </div>
-        <div className="mainvideoContainer">
-          <div className="mainvideo">
+        <div className="mainvideoContainer row">
+          <div className="mainvideo col-xl-12 col-sm-12">
             <video className='video1' ref={details.type === "tutor" ? currentUserVideoRef : remoteVideoRef ? remoteVideoRef : ""} src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
           </div>
         </div>
-        < ClassNavigators />
+        < ClassNavigators group_modal={grp_modal} setgroup_modal={handle_grpChange} />
         <div className="othervideos">
 
           <Swiper
