@@ -23,6 +23,7 @@ function Class({ details }) {
   const [declinedMsgModal, setdeclinedMsgModal] = useState(false)
   const [grp_modal, setgrp_modal] = useState(false)
   let [students, setStudents] = useState([])
+  const [toogleController,settoogleController]=useState(false)
   let config = {
     "classid": details.id,
   }
@@ -190,16 +191,17 @@ function Class({ details }) {
       {
         grp_modal && <Table data={students} />
       }
-      <div className="classContainer">
+      <div className="classContainer" onMouseEnter={()=>settoogleController(true)}  onPointerLeave={()=>settoogleController(false)} >
         <div className="textArea">
           {classDetails && <p> {classDetails.tutorname} Is Presenting </p>}
         </div>
         <div className="mainvideoContainer row">
           <div className="mainvideo col-xl-12 col-sm-12">
             <video className='video1' ref={details.type === "tutor" ? currentUserVideoRef : remoteVideoRef ? remoteVideoRef : ""} src="https://i.ytimg.com/vi/v0Bkxc3YeIc/maxresdefault.jpg" alt="" />
+           { toogleController &&< ClassNavigators group_modal={grp_modal} setgroup_modal={handle_grpChange} />}
           </div>
         </div>
-        < ClassNavigators group_modal={grp_modal} setgroup_modal={handle_grpChange} />
+        
         <div className="othervideos">
 
           <Swiper

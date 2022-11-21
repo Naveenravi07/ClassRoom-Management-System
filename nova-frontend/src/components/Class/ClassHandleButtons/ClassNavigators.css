@@ -1,20 +1,23 @@
 .classnavigators {
-    background: #001524;
-    margin-top: 30px;
     display: flex;
-    height: 50px;
+    width: auto;
+    height: 80px;
 }
 
 .navitems {
     margin: auto;
-    background: #353535;
     border-radius: 12px;
     flex-direction: row;
+    height: 50px;
+    display: flex;
 }
 
 .navicon {
     color: white;
-
+    margin: auto;
+}
+.navitems div {
+    margin: auto;
 }
 
 .addspace {
@@ -24,4 +27,5 @@
 
 .infobtn {
     margin-right: 30px;
+    padding-right: 30px;
 }
