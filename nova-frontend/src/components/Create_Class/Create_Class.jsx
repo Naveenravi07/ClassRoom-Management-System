@@ -5,10 +5,12 @@ import { useHistory } from 'react-router-dom'
 import './Create_Class.css'
 import Modal from '../UI/Modal/Modal'
 import List_Classes from '../ListClasses/List_Classes'
+import { ClassContext } from '../../contexts/ClassContext'
 
 function Create_Class({ id }) {
     let history = useHistory()
     let { tutor } = useContext(TutuorAuthContext)
+    let {allclasses,setallclasses}=useContext(ClassContext)
     let [err, setErr] = useState(false)
     tutor = JSON.parse(tutor)
     let data
@@ -23,6 +25,8 @@ function Create_Class({ id }) {
         axios.post('/tutor/create-class', data).then((res) => {
             setErr(false)
             console.log(res.data.url);
+            console.log(res);
+            setallclasses([...allclasses,res.data])
             // history.push(`/meeting/${res.data.url}`)
         }).catch((err) => {
             setErr(true)

@@ -6,6 +6,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 import { TutuorAuthContext } from '../../contexts/TutorAuthContext'
 import Alert from 'react-bootstrap/Alert';
 import { useHistory } from 'react-router-dom'
+import {ClassContext} from '../../contexts/ClassContext'
 
 function List_Classes({ type, data }) {
 
@@ -17,6 +18,8 @@ function List_Classes({ type, data }) {
 
     let { user } = useContext(AuthContext)
     let { tutor } = useContext(TutuorAuthContext)
+    let {allclasses,setallclasses}=useContext(ClassContext)
+
 
     let history = useHistory()
     let handleClassJoin = (classid, owner) => {
@@ -32,12 +35,14 @@ function List_Classes({ type, data }) {
     }
 
     useEffect(() => {
-
+        console.log(allclasses);
         if (type === "tutor") {
             axios.post('/tutor/getClasses', data).then((res) => {
+                console.log(res);
                 setClasses(res.data)
                 setLoading(false)
             }).catch((Err) => {
+                console.log(Err);
                 setErr("Ooops Somethng went wrong ")
             })
 
@@ -51,7 +56,7 @@ function List_Classes({ type, data }) {
                 setErr("Ooops Somethng went wrong ")
             })
         }
-    }, [user, tutor])
+    }, [user, tutor,allclasses])
 
     return (
         <div className='bind'>

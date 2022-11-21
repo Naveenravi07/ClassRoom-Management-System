@@ -3,7 +3,8 @@ const router = express.Router();
 const tutorController = require("../controller/tutor.controller");
 let db = require("../config/db.config")
 let fs = require("fs")
-let fileupload = require("express-fileupload")
+let fileupload = require("express-fileupload");
+const { response } = require("express");
 
 router.post('/signup', (req, res) => {
     try {
@@ -119,5 +120,11 @@ router.post('/removeTutorPeerid',(req,res)=>{
 //     tutorController.getStudentDetails(req.body)
 //     res.send("haii")
 // })
+
+router.get('/listAllClasses',(req,res)=>{
+    tutorController.listAllClasses(req.body.tid).then((response)=>[
+        
+    ])
+})
 
 module.exports = router

@@ -179,5 +179,12 @@ module.exports = {
             )
             resolve()
         })
+    },
+    listAllClasses:(id)=>{
+        return new Promise(async(resolve,reject)=>{
+            let docs=await db.get().collection(collections.CLASSES).find({tutor:id}).then((result)=>{
+                resolve(result)
+            })
+        })
     }
 }

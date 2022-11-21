@@ -5,13 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Context from './contexts/AuthContext';
 import TutorContext from './contexts/TutorAuthContext';
+import ClassContextWrapper from './contexts/ClassContext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 
 root.render(
     <TutorContext>
         <Context>
+            <ClassContextWrapper>
             <App />
+            </ClassContextWrapper>
         </Context>
     </TutorContext>
 
