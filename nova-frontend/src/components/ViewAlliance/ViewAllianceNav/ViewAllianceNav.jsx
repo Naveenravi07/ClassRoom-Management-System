@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import './ViewAllianceNav.css';
 import { useHistory } from "react-router-dom";
-
-function ViewAllianceNav() {
+import List_Classes from '../../ListClasses/List_Classes';
+import Fees from '../../Fees/Fees';
+function ViewAllianceNav({setnav}) {
 
   const [active, setActive] = useState(null)
+
   let history = useHistory()
   let url = history.location.pathname
 
@@ -27,7 +29,6 @@ function ViewAllianceNav() {
         }}>Meetings</a>
 
         <a className={active === "notes" ? "active" : ""} onClick={() => {
-
         }}>Notes</a>
         <a
           className={active === "attendence" ? "active" : ""}
@@ -37,7 +38,8 @@ function ViewAllianceNav() {
         >Attendence</a>
         <a className={active === "fees" ? "active" : ""}
           onClick={() => {
-
+            setActive("fees")
+            setnav(<Fees/>)
           }}
         > Fees</a>
         <a className={active === "about" ? "active" : ""}

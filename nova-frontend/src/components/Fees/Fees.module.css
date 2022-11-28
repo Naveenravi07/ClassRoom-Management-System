@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200&display=swap');
+.main{
+    background: #202020;
+    height: max-content !important;
+    color: white;
+    display: flex;
+}
+.main form{
+    background: #2222;
+    height: max-content;
+    color: wheat;
+    display: flex;
+    flex-direction: column;
+}
+
+form small,label{
+    color: white;
+    padding-top: 20px;
+}
+
+.formwrapper{
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    position: initial;
+    margin-top: 20px;
+
+}
+.formheader{
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+.priceinp{
+    padding-left: 10px;
+}

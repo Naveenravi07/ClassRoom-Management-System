@@ -4,7 +4,7 @@ import SNavbar from '../../components/SNavbar/SNavbar'
 import { useLocation } from 'react-router-dom'
 import List_Classes from '../../components/ListClasses/List_Classes'
 import ClassContextWrapper from '../../contexts/ClassContext'
-
+import ViewAllianceNav from '../../components/ViewAlliance/ViewAllianceNav/ViewAllianceNav'
 function StudentViewAlliance() {
     let location = useLocation()
     console.log(location.state);
@@ -21,6 +21,7 @@ function StudentViewAlliance() {
         <div style={{minHeight:"100vh",background:"#202020"}}>
             <ClassContextWrapper>
             <SNavbar />
+            <ViewAllianceNav/>
             <ViewAlliance type="student" data={obj} />
             <List_Classes type="student" data={obj} />
             </ClassContextWrapper>
